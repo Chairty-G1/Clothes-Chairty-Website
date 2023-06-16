@@ -25,11 +25,6 @@ const adminSchema = new mongoose.Schema({
     required: true,
     maxlength: 20,
   },
-  address: {
-    type: String,
-    required: true,
-    maxlength: 50,
-  },
   is_delete: {
     type: Boolean,
     default: false,

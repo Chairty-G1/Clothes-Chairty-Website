@@ -3,7 +3,7 @@ GET http://localhost:8000/
 
 ###
 
-GET http://localhost:8000/users
+GET http://localhost:8000/admin
 
 ###
 
@@ -42,10 +42,9 @@ Content-Type: application/json
 
 {
     "username": "ahmad",
-    "email": "omar12@gmail.com",
+    "email": "omar@gmail.com",
     "password": "1234",
     "phone": "phone",
-    "address": "address"
 }
 
 ###

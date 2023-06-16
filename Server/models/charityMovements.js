@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const orderMovementsSchema = new mongoose.Schema({
+const charitiesMovementsSchema = new mongoose.Schema({
   destinataire: {
     type: String,
     required: true,
@@ -9,14 +9,10 @@ const orderMovementsSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  orderId: {
+  order_id: {
     type: Number,
     required: true,
   },
-  donorId: {
-    type: Number,
-    ref: 'Donor',
-  },
 });
 
-module.exports = mongoose.model('OrderMovements', orderMovementsSchema);
+module.exports = mongoose.model('CharitiesMovements', charitiesMovementsSchema);

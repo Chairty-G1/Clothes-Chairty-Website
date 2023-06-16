@@ -32,41 +32,8 @@ const Login = async (req, res, next) => {
 
 };
 
-const SignUp_admin = async (req, res, next) => {
-  const { username, email, password, phone, address } = req.body;
-
-  try {
-    const user = await Admin.findOne({ email: email });
-
-    if (!user) {
-
-      return res.status(401).send("Email already taken");
-    }
-  } catch (error) {
-    errorHandler(error, req, res);
-  }
-
-  const hashedPwd = await bcrypt.hash(password, 10);
-
-    const newAdmin = new Admin({
-      role: 'admin',
-      username: username,
-      email: email,
-      password: hashedPwd,
-      phone: phone,
-      address: address,
-    });
-
-  const user = await newAdmin.save();
-
-  req.body = user;
-  next();
-};
 
 module.exports = {
   Login,
-  SignUp_admin,
-  // SignUp_donor,
-  // SignUp_charities,
   createToken,
 }; 

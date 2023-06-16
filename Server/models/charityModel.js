@@ -25,11 +25,6 @@ const charitiesSchema = new mongoose.Schema({
     required: true,
     maxlength: 20,
   },
-  address: {
-    type: String,
-    required: true,
-    maxlength: 50,
-  },
   is_delete: {
     type: Boolean,
     default: false,
@@ -40,6 +35,6 @@ const charitiesSchema = new mongoose.Schema({
   },
 });
 
-const Charities = mongoose.model('Charities', charitiesSchema);
+const Charity = mongoose.model('Charity', charitiesSchema);
 
-module.exports = Charities;
+module.exports = Charity;
