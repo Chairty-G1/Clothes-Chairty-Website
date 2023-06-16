@@ -1,0 +1,59 @@
+
+GET http://localhost:8000/
+
+###
+
+GET http://localhost:8000/users
+
+###
+
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+    "username": "omar",
+    "email": "omar@gmail.com",
+    "password": "1234"
+}
+
+###
+
+PUT http://localhost:8000/users/64887e8cfab1b171101228ee
+Content-Type: application/json
+
+{
+    "username": "ahmad",
+    "email": "omar@gmail.com",
+    "password": "1234"
+}
+
+###
+
+DELETE http://localhost:8000/users/64897663053dc20ce7883a4c
+Content-Type: application/json
+
+###
+
+# Sign up test
+
+                                                            #Admin
+POST http://localhost:8000/SignUp_admin
+Content-Type: application/json
+
+{
+    "username": "ahmad",
+    "email": "omar12@gmail.com",
+    "password": "1234",
+    "phone": "phone",
+    "address": "address"
+}
+
+###
+
+POST http://localhost:8000/login
+Content-Type: application/json
+
+{
+    "email": "omar12@gmail.com",
+    "password": "1234"
+}

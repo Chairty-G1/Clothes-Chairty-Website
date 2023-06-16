@@ -1,0 +1,12 @@
+:root {
+    --main-color: #A0D8B3;
+    --second-color: #DBDFEA;
+
+    /* Name colors in tailwind */
+    /* teal-600 */
+    /* gray-200 */
+}
+
+.hero-img {
+    background-image: url(../Images/SignUp-Hero-img.png);
+} 
