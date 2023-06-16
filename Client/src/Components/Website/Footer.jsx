@@ -5,35 +5,35 @@ export default function Footer() {
   return (
     <footer aria-label="Site Footer" class="bg-gray-100">
       <div class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div class="flex justify-center ">
-          <span class="tracking-wide text-lg	font-bold font-mono text-teal-600"> TechHouse </span>
-
+        <div class="flex justify-center">
+          <span class="tracking-wide text-lg	font-bold font-mono text-teal-600">  وشاح الامل</span>
         </div>
+          <span class="flex justify-center tracking-wide text-lg	font-bold font-mono text-teal-600 mt-3"> مشاركتك في نشر الدفء والأمل</span>
 
-        <p class="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">TechHouse
+        <p class="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">
 
-          website where electronic devices and other technological products are sold to customers, providing a convenient and efficient way to purchase products from the comfort of their own homes.
+        مرحبًا بك في موقع وشاح الامل، حيث تتاح لك فرصة الإسهام في جعل حياة الأشخاص المحتاجين أفضل. من خلال هذا الموقع، يمكنك التبرع بالملابس الجديدة أو المستعملة بكل سهولة ويسر، ومشاركة الفرحة والأمل مع الآخرين.
+
         </p>
 
         <nav aria-label="Footer Nav" class="mt-12">
           <ul class="flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
             <li>
-              <Link to="/" className='text-gray-500 font-bold transition hover:text-teal-600'>Home</Link>
+              <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>عنا</Link>
             </li>
             <li>
-              <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>About Us</Link>
-            </li>
-
-            <li>
-              <Link to="/contactUs" className='text-gray-500 font-bold transition hover:text-teal-600'>Contact Us</Link>
+              <Link to="/contactUs" className='text-gray-500 font-bold transition  hover:text-teal-600'>تواصل معنا</Link>
             </li>
 
             <li>
-              <Link to="/cart" className='text-gray-500 font-bold transition hover:text-teal-600'>Cart</Link>
+              <Link to="/idea" className='text-gray-500 font-bold transition  hover:text-teal-600'>الفكرة</Link>
             </li>
 
             <li>
-              <Link to="/products" className='text-gray-500 font-bold transition hover:text-teal-600'>Products</Link>
+              <Link to="/our_services" className='text-gray-500 font-bold transition  hover:text-teal-600'>خدماتنا</Link>
+            </li>
+            <li>
+              <Link to="/" className='text-gray-500 font-bold transition hover:text-teal-600'>الرئيسية</Link>
             </li>
           </ul>
         </nav>

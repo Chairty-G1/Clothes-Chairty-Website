@@ -45,27 +45,9 @@ export default function Header({ isLog, updateIsLog }) {
                <nav className={`md:hidden fixed top-[0px] rounded-md  w-60 border-teal-600	border-2	 bg-gray-100 z-40 duration-700 ${nav ? "right-[53px] top-[53px]" : "right-[-100vw]"
                   } `}>
                   <ul class="flex flex-col items-center" dir="rtl">
-                     <li className='mt-5'>
-                        <Link to="/" className='text-gray-500 font-bold transition hover:text-teal-600' >الصفحة الرئيسية</Link>
+                     <li>
+                        <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>التبرعات</Link>
                      </li>
-                     <li className='mt-12'>
-                        <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>About Us</Link>
-                     </li>
-                     <li className='mt-12'>
-                        <Link to="/contactUs" className='text-gray-500 font-bold transition  hover:text-teal-600'>Contact Us</Link>
-                     </li>
-                     <li className='mt-12'>
-                        <Link to="/cart" className='text-gray-500 font-bold transition  hover:text-teal-600'>Cart</Link>
-                     </li>
-
-                     <li className='mt-12 mb-5'>
-                        <Link to="/products" className='text-gray-500 font-bold transition  hover:text-teal-600'>Products</Link>
-                     </li>
-                  </ul>
-               </nav>
-
-               <nav aria-label="Site Nav" class="hidden md:block">
-                  <ul class="flex items-center gap-6 text-sm ">
                      <li>
                         <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>عنا</Link>
                      </li>
@@ -74,11 +56,36 @@ export default function Header({ isLog, updateIsLog }) {
                      </li>
 
                      <li>
-                        <Link to="/cart" className='text-gray-500 font-bold transition  hover:text-teal-600'>الفكرة</Link>
+                        <Link to="/idea" className='text-gray-500 font-bold transition  hover:text-teal-600'>الفكرة</Link>
                      </li>
 
                      <li>
-                        <Link to="/products" className='text-gray-500 font-bold transition  hover:text-teal-600'>خدماتنا</Link>
+                        <Link to="/our_services" className='text-gray-500 font-bold transition  hover:text-teal-600'>خدماتنا</Link>
+                     </li>
+                     <li>
+                        <Link to="/" className='text-gray-500 font-bold transition hover:text-teal-600'>الرئيسية</Link>
+                     </li>
+                  </ul>
+               </nav>
+
+               <nav aria-label="Site Nav" class="hidden md:block">
+                  <ul class="flex items-center gap-6 text-sm ">
+                     <li>
+                        <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>التبرعات</Link>
+                     </li>
+                     <li>
+                        <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>عنا</Link>
+                     </li>
+                     <li>
+                        <Link to="/contactUs" className='text-gray-500 font-bold transition  hover:text-teal-600'>تواصل معنا</Link>
+                     </li>
+
+                     <li>
+                        <Link to="/idea" className='text-gray-500 font-bold transition  hover:text-teal-600'>الفكرة</Link>
+                     </li>
+
+                     <li>
+                        <Link to="/our_services" className='text-gray-500 font-bold transition  hover:text-teal-600'>خدماتنا</Link>
                      </li>
                      <li>
                         <Link to="/" className='text-gray-500 font-bold transition hover:text-teal-600'>الرئيسية</Link>
