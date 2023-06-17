@@ -85,10 +85,10 @@ const deleteOrder = async (req, res) => {
 
 module.exports = {
     allOrders,
+    allOrdersNotActive,
     oneOrderById,
     AllOrderByEmail,
     newOrder,
     updateOrder,
     deleteOrder,
-    oneOrderByEmail,
 }; 
