@@ -19,7 +19,7 @@ const oneDonor = async (req, res) => {
     res.json(user);
 };
 
-const newDonor = async (req, res) => {
+const newDonor = async (req, res, next) => {
 
     const { username, email, password, phone } = req.body;
 
@@ -39,7 +39,7 @@ const newDonor = async (req, res) => {
         username: username,
         email: email,
         password: hashedPwd,
-        phone: phone,
+        phone: phone
     });
 
     const user = await newDonor.save();

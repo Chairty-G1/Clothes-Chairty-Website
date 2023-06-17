@@ -19,7 +19,7 @@ const oneAdmin = async (req, res) => {
     res.json(user);
 };
 
-const newAdmin = async (req, res) => {
+const newAdmin = async (req, res, next) => {
 
     const { username, email, password, phone } = req.body;
 

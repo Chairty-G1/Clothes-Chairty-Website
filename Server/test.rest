@@ -37,14 +37,14 @@ Content-Type: application/json
 # Sign up test
 
                                                             #Admin
-POST http://localhost:8000/SignUp_admin
+POST http://localhost:8000/admin
 Content-Type: application/json
 
 {
     "username": "ahmad",
-    "email": "omar@gmail.com",
+    "email": "omar3@gmail.com",
     "password": "1234",
-    "phone": "phone",
+    "phone": "phone"
 }
 
 ###

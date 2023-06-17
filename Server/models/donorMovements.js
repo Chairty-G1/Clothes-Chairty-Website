@@ -17,6 +17,10 @@ const orderMovementsSchema = new mongoose.Schema({
     type: Number,
     ref: 'Donor',
   },
+  status: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('OrderMovements', orderMovementsSchema);

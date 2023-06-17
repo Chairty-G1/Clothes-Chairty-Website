@@ -1,19 +1,40 @@
 const Admin = require("../models/adminModel");
+const Donor = require("../models/donorModel");
+const Charity = require("../models/charityModel");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const errorHandler = require("../middleware/500");
 
 const createToken = (req, res) => {
-  
+
   const accessToken = jwt.sign(
-    JSON.parse(JSON.stringify({userId : req.body?.admin_id || req.body?.donor_id || req.body?.charities_id, role : req.body.role})),
+    JSON.parse(JSON.stringify({ userId: req.body._id, role: req.body.role })),
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: "1w" }
   );
-  res.json({ Token : accessToken, data : req.body})
+
+  res.json({ Token: accessToken, data: req.body })
 }
 
-const Login = async (req, res, next) => {
+const loginDonor = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await Donor.findOne({ email: email });
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+
+      return res.status(401).send("incorrect email or password");
+    }
+    req.body = user;
+    next();
+
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
+};
+
+const loginAdmin = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
@@ -21,19 +42,42 @@ const Login = async (req, res, next) => {
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
 
-      res.status(401).send("incorrect email or password");
+      return res.status(401).send("incorrect email or password");
     }
     req.body = user;
     next();
-    
+
   } catch (error) {
     errorHandler(error, req, res);
   }
-
 };
 
+const loginCharity = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await Charity.findOne({ email: email });
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+
+      return res.status(401).send("incorrect email or password");
+    }
+
+    if (!user.active) {
+
+      return res.status(401).send("Don't have access");
+    }
+    req.body = user;
+    next();
+
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
+};
 
 module.exports = {
-  Login,
+  loginDonor,
+  loginAdmin,
+  loginCharity,
   createToken,
 }; 

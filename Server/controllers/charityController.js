@@ -19,7 +19,7 @@ const oneCharity = async (req, res) => {
     res.json(user);
 };
 
-const newCharity = async (req, res) => {
+const newCharity = async (req, res, next) => {
 
     const { username, email, password, phone } = req.body;
 
@@ -40,6 +40,7 @@ const newCharity = async (req, res) => {
         email: email,
         password: hashedPwd,
         phone: phone,
+        active: false,
     });
 
     const user = await newCharity.save();

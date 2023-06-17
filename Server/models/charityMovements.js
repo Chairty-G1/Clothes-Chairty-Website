@@ -13,6 +13,14 @@ const charitiesMovementsSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  charityId: {
+    type: Number,
+    ref: 'Charity',
+  },
+  status: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('CharitiesMovements', charitiesMovementsSchema);
