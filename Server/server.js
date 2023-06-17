@@ -7,6 +7,7 @@ const adminRouts = require('./routes/adminRouter');
 const charityRouter = require('./routes/charityRouter');
 const donorRouter = require('./routes/donorRouter');
 const logInRouts = require('./routes/logInRouter');
+const orderRouter = require('./routes/orderRouter');
 
 const dbURI = "mongodb+srv://admin:admin@cluster0.ldqpwa2.mongodb.net/?retryWrites=true&w=majority"
 
@@ -23,6 +24,7 @@ app.use(adminRouts);
 app.use(charityRouter);
 app.use(donorRouter);
 app.use(logInRouts);
+app.use(orderRouter);
 
 module.exports = {
   server: app,
