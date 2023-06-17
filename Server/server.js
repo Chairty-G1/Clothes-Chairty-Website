@@ -4,9 +4,11 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 const mongoose = require("mongoose");
 const adminRouts = require('./routes/adminRouter');
+const charityRouter = require('./routes/charityRouter');
+const donorRouter = require('./routes/donorRouter');
 const logInRouts = require('./routes/logInRouter');
 
-const dbURI = "mongodb+srv://Omarps:M1QDl3ps4uDiujPh@cluster0.0shgatw.mongodb.net/database"
+const dbURI = "mongodb+srv://admin:admin@cluster0.ldqpwa2.mongodb.net/?retryWrites=true&w=majority"
 
 
 const app = express();
@@ -18,6 +20,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(adminRouts);
+app.use(charityRouter);
+app.use(donorRouter);
 app.use(logInRouts);
 
 module.exports = {
