@@ -6,7 +6,7 @@ export default function Header({ isLog, updateIsLog }) {
    const [nav, setNav] = useState(false);
 
    function handleLogOut() {
-      sessionStorage.removeItem('User');
+      localStorage.removeItem('token');
       updateIsLog(false)
    }
 

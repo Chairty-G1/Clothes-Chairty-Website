@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 
 const orderMovementsSchema = new mongoose.Schema({
-  destinataire: {
+  destination: {
     type: String,
     required: true,
   },
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
-  orderId: {
-    type: Number,
+  order_id: {
+    type: String,
     required: true,
   },
-  donorId: {
-    type: Number,
-    ref: 'Donor',
+  donor_id: {
+    type: String,
+    required: true,
   },
   status: {
     type: Boolean,
@@ -23,4 +23,4 @@ const orderMovementsSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('OrderMovements', orderMovementsSchema);
+module.exports = mongoose.model('DonorMovements', orderMovementsSchema);

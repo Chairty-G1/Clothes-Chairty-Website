@@ -1,21 +1,20 @@
 const mongoose = require('mongoose');
 
 const charitiesMovementsSchema = new mongoose.Schema({
-  destinataire: {
+  destination: {
     type: String,
     required: true,
   },
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   order_id: {
-    type: Number,
+    type: String,
     required: true,
   },
-  charityId: {
-    type: Number,
-    ref: 'Charity',
+  charity_id: {
+    type: String,
   },
   status: {
     type: Boolean,
@@ -23,4 +22,4 @@ const charitiesMovementsSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('CharitiesMovements', charitiesMovementsSchema);
+module.exports = mongoose.model('CharityMovements', charitiesMovementsSchema);

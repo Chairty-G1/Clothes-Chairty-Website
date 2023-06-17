@@ -4,44 +4,58 @@ import Logo from '../../Images/ScarfOfHope.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SignGoogle from './SignInWithGoogle';
 import Facebook from './SigInWithFacebook';
+import axios from 'axios'
 
-if (localStorage.Users === undefined) {
-  localStorage.setItem('Users', JSON.stringify([]))
-}
 
-export default function SignUp({updateIsLog}) {
+export default function SignUp({ updateIsLog }) {
 
   useEffect(() => {
+    const token = localStorage.getItem("token") || false;
+    if (token) {
+      checkToken(token).then((resultUsers) => {
+        if (resultUsers) {
+          updateIsLog(true);
+          navigate(path);
+        }
+      });
+    }
+
+    async function checkToken(token) {
+      try {
+        const response = await axios.get("http://localhost:5000/checkToken", {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    }
+
     window.scrollTo(0, 0);
   }, []);
-  
+
   const navigate = useNavigate();
 
   const [path, setPath] = useState('/');
 
-  const location = useLocation();
-
-  useEffect( () => {
-    if (location.search === "?CheckOut")
-      setPath('/payment');
-  }, []);
 
   const [user, setUser] = useState({
-    name: '',
+    username: '',
     phone: '',
     email: '',
-    password: '',
-    cart: []
+    password: ''
   })
 
-  const [users, setUsers] = useState(JSON.parse(localStorage.Users));
-
   const [checkInput, setCheckInput] = useState({
-    name: false,
+    username: false,
     phone: false,
     email: false,
     password: false,
-    confirmPassword: false
+    confirmPassword: false,
+    type: false
   });
 
   const themeValue = {
@@ -54,43 +68,65 @@ export default function SignUp({updateIsLog}) {
   const [inputTheme, setInputTheme] = useState({
     email: themeValue.normal,
     password: themeValue.normal,
-    name: themeValue.normal,
+    username: themeValue.normal,
     phone: themeValue.normal,
     confirmPassword: themeValue.normal
   });
 
   const [massageWarning, setMassageWarning] = useState({
-    name: '',
+    username: '',
     phone: '',
     email: '',
     password: '',
     confirmPassword: '',
     submit: ''
   });
+  
+  const [selectedUserType, setSelectedUserType] = useState("");
+  const [passwordMode, setPasswordMode] = useState(true);
+  const [passwordModeCon, setPasswordModeCon] = useState(true);
 
-  function checkEmail(email) {
 
-    for (let index = 0; index < users.length; index++) {
-      if (email === users[index].email) {
-        return true;
-      }
+  function handlePasswordMode() {
+    setPasswordMode(!passwordMode);
+  }
+
+  function handlePasswordModeCon() {
+    setPasswordModeCon(!passwordModeCon);
+  }
+
+  function handleUserType(e) {
+    const type = e.target.value;
+    setCheckInput({ ...checkInput, type: false });
+
+    if (type === "") {
+      setMassageWarning({
+        ...massageWarning,
+        type: "الرجاء اختيار نوع المستخدم",
+      });
+    } else {
+      setMassageWarning({
+        ...massageWarning,
+        type: "",
+      });
+      setSelectedUserType(e.target.value);
+      setCheckInput({ ...checkInput, type: true });
     }
-    return false;
   }
 
   function handleName(event) {
-    const name = event.target.value;
-    setCheckInput({ ...checkInput, name: false });
+    const username = event.target.value;
+    setCheckInput({ ...checkInput, username: false });
 
-    if (name === '') {
-      setInputTheme({ ...inputTheme, name: themeValue.normal });
-      setMassageWarning({ ...massageWarning, name: 'حقل مطلوب' });
+    if (username === '') {
+      setInputTheme({ ...inputTheme, username: themeValue.normal });
+      setMassageWarning({ ...massageWarning, username: 'حقل مطلوب' });
     }
     else {
-      setInputTheme({ ...inputTheme, name: themeValue.success })
-      setMassageWarning({ ...massageWarning, name: '' });
-      setUser({ ...user, name: name });
-      setCheckInput({ ...checkInput, name: true });
+      setInputTheme({ ...inputTheme, username: themeValue.success })
+      setMassageWarning({ ...massageWarning, username: '' });
+      setUser({ ...user, username: username });
+      setCheckInput({ ...checkInput, username: true });
     }
   }
 
@@ -127,11 +163,6 @@ export default function SignUp({updateIsLog}) {
     else if (!patternEmail.test(email)) {
       setInputTheme({ ...inputTheme, email: themeValue.error });
       setMassageWarning({ ...massageWarning, email: 'بريد الكتروني غير صالح' });
-    }
-    else if (checkEmail(email)) {
-      setMassageWarning({ ...massageWarning, email: 'البريد الالكنروني موجود االفعل' });
-      setInputTheme({ ...inputTheme, email: themeValue.error });
-      setUser({ ...user, email: email });
     }
     else {
       setMassageWarning({ ...massageWarning, email: '' });
@@ -187,16 +218,46 @@ export default function SignUp({updateIsLog}) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (checkInput.name && checkInput.email && checkInput.phone && checkInput.password && checkInput.confirmPassword) {
-      setUsers([...users, user]);
-      localStorage.setItem('Users', JSON.stringify([...users, user]));
-      sessionStorage.setItem('User', JSON.stringify(user));
-      event.target.reset();
+    if (
+      checkInput.username &&
+      checkInput.email &&
+      checkInput.phone &&
+      checkInput.password &&
+      checkInput.confirmPassword &&
+      checkInput.type
+    ) {
+      sendDataToServer(user);
+    } else {
+      setMassageWarning({
+        ...massageWarning,
+        submit:
+          "الرجاء ادخال جميع الحقول المطلوبة",
+      });
+    }
+  }
+
+  async function sendDataToServer(user) {
+
+    try {
+      const res = await axios.post(`http://localhost:8000/${selectedUserType === "donor" ? "donor" : "charity"}`, user);
+
+      if (selectedUserType === "charity") {
+        setMassageWarning({
+          ...massageWarning,
+          submit: "تمت العملية بنجاح ،يجب عليك انتظار موافقة المسؤول الان، سوف تصلك رسالة بريد الكترونية عندما تتم الموافقة او الرفض",
+        });
+        return;
+    }
+
+      localStorage.setItem("token", res.data.Token);
       updateIsLog(true);
       navigate(path);
-    }
-    else {
-      setMassageWarning({ ...massageWarning, submit: 'Please fill in all fields or verify that the input is correct.' });
+    } catch (err) {
+      setMassageWarning({
+        ...massageWarning,
+        email: "البريد الالكتروني موجود بالفعل",
+      });
+      console.error(err);
     }
   }
 
@@ -209,6 +270,8 @@ export default function SignUp({updateIsLog}) {
           <div class="hero-img xl:m-16 w-full bg-contain bg-center bg-no-repeat">
           </div>
         </div>
+
+
         <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 sm:w-10/12">
           <div>
             <img
@@ -217,6 +280,36 @@ export default function SignUp({updateIsLog}) {
               alt='Shopping image'
             />
           </div>
+          <div className="flex flex-wrap mt-4 items-center justify-around border border-opacity-50 rounded-3">
+            <div className="my-3">
+              <label htmlFor="donor" className="me-3 text-sm font-medium">
+                متبرع
+              </label>
+              <input
+                onChange={handleUserType}
+                value="donor"
+                checked={selectedUserType === "donor"}
+                type="radio"
+                id="donor"
+                name="flexRadioDefault"
+                className=""
+              />
+            </div>
+            <div className="my-3">
+              <label htmlFor="charity" className="me-3 text-sm font-medium">
+                جهة خيرية
+              </label>
+              <input
+                onChange={handleUserType}
+                value="charity"
+                checked={selectedUserType === "charity"}
+                type="radio"
+                id="charity"
+                name="flexRadioDefault"
+                className=""
+              />
+            </div>
+          </div>
           <div class="mt-12 flex flex-col items-center ">
             <h1 class="text-2xl xl:text-3xl font-extrabold text-teal-600 ">
               سجل الان للاضمام لنا
@@ -224,23 +317,23 @@ export default function SignUp({updateIsLog}) {
             <div class="w-full flex-1 mt-8">
               <div class="flex flex-col items-center">
 
-                <SignGoogle massage={"التسجيل بواسطة جوجل"} />
+                <SignGoogle massage={"التسجيل بواسطة جوجل"} selectedUserType={selectedUserType} updateIsLog={updateIsLog} />
 
-                <Facebook massage={"التسجيل بواسطة فيسيوك"} />
+                <Facebook massage={"التسجيل بواسطة فيسيوك"} selectedUserType={selectedUserType} updateIsLog={updateIsLog} />
               </div>
 
               <div class="my-12 border-b text-center">
                 <div
                   class="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2"
                 >
-                   او يمكنك التسجيل باستخدام البريد الالكتروني
+                  او يمكنك التسجيل باستخدام البريد الالكتروني
                 </div>
               </div>
               <form onSubmit={(event) => handleSubmit(event)}>
                 <div class="mx-auto max-w-xs">
                   <div class="mb-3">
-                    <label for="name" className={`block mb-2 text-sm font-medium text-${inputTheme.name}-700 dark:text-${inputTheme.name}-500 `}>الاسم</label>
-                    <input onChange={(event) => handleName(event)} type="text" id="name" className={`border-${inputTheme.name}-300 text-${inputTheme.name}-900 dark:text-${inputTheme.name}-400 placeholder-${inputTheme.name}-700 dark:placeholder-${inputTheme.name}-500 focus:ring-${inputTheme.name}-500 focus:border-${inputTheme.name}-500 dark:border-${inputTheme.name}-500 bg-white border-2 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 focus:outline-none`} placeholder="ادخل اسمك" />
+                    <label for="name" className={`block mb-2 text-sm font-medium text-${inputTheme.username}-700 dark:text-${inputTheme.username}-500 `}>الاسم</label>
+                    <input onChange={(event) => handleName(event)} type="text" id="name" className={`border-${inputTheme.username}-300 text-${inputTheme.username}-900 dark:text-${inputTheme.username}-400 placeholder-${inputTheme.username}-700 dark:placeholder-${inputTheme.username}-500 focus:ring-${inputTheme.username}-500 focus:border-${inputTheme.username}-500 dark:border-${inputTheme.username}-500 bg-white border-2 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 focus:outline-none`} placeholder="ادخل اسمك" />
                     <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning.name}</span></p>
                   </div>
                   <div class="mb-3">
@@ -253,14 +346,38 @@ export default function SignUp({updateIsLog}) {
                     <input onChange={(event) => handleEmail(event)} type="text" id="email" className={`border-${inputTheme.email}-300 text-${inputTheme.email}-900 dark:text-${inputTheme.email}-400 placeholder-${inputTheme.email}-700 dark:placeholder-${inputTheme.email}-500 focus:ring-${inputTheme.email}-500 focus:border-${inputTheme.email}-500 dark:border-${inputTheme.email}-500 bg-white border-2 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 focus:outline-none`} placeholder="ادخل بريدك الالكتروني" />
                     <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning.email}</span></p>
                   </div>
-                  <div class="mb-3">
+                  <div class="mb-3 password">
                     <label for="password" className={`text-${inputTheme.password}-700 dark:text-${inputTheme.password}-500 block mb-2 text-sm font-medium`}>كلمة المرور</label>
-                    <input onChange={(event) => handlePassword(event)} type="password" id="password" className={`border-${inputTheme.password}-300 text-${inputTheme.password}-900 placeholder-${inputTheme.password}-700 focus:ring-${inputTheme.password}-500 focus:border-${inputTheme.password}-500 dark:text-${inputTheme.password}-500 dark:placeholder-${inputTheme.password}-500 dark:border-${inputTheme.password}-500 bg-white border-2 text-sm rounded-lg dark:bg-gray-700 block w-full p-2.5 focus:outline-none`} placeholder="ادخل كلمة المرور" />
+                    <input onChange={(event) => handlePassword(event)} type={passwordMode ? "password" : "text"} id="password" className={`border-${inputTheme.password}-300 text-${inputTheme.password}-900 placeholder-${inputTheme.password}-700 focus:ring-${inputTheme.password}-500 focus:border-${inputTheme.password}-500 dark:text-${inputTheme.password}-500 dark:placeholder-${inputTheme.password}-500 dark:border-${inputTheme.password}-500 bg-white border-2 text-sm rounded-lg dark:bg-gray-700 block w-full p-2.5 focus:outline-none`} placeholder="ادخل كلمة المرور" />
+                    <span className="eye" onClick={handlePasswordMode}>
+                      <i style={{color: inputTheme.password}}
+                        className={`fas fa-eye ${passwordMode ? "block" : "hidden"
+                          }`}
+                        id="showEye"
+                      />
+                      <i style={{color: inputTheme.password}}
+                        className={`fas fa-eye-slash ${passwordMode ? "hidden" : "block"
+                          }`}
+                        id="hideEye"
+                      />
+                    </span>
                     <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning.password}</span></p>
                   </div>
-                  <div>
+                  <div className='password'>
                     <label for="confirmPassword" className={`text-${inputTheme.confirmPassword}-700 dark:text-${inputTheme.confirmPassword}-500 block mb-2 text-sm font-medium`}>تأكيد كلمة المرور</label>
-                    <input onChange={(event) => handleConfirmPassword(event)} type="password" id="confirmPassword" className={`border-${inputTheme.confirmPassword}-300 text-${inputTheme.confirmPassword}-900 placeholder-${inputTheme.confirmPassword}-700 focus:ring-${inputTheme.confirmPassword}-500 focus:border-${inputTheme.confirmPassword}-500 dark:text-${inputTheme.confirmPassword}-500 dark:placeholder-${inputTheme.confirmPassword}-500 dark:border-${inputTheme.confirmPassword}-500 bg-white border-2 text-sm rounded-lg dark:bg-gray-700 block w-full p-2.5 focus:outline-none`} placeholder="تأكيد كلمة المرور" />
+                    <input onChange={(event) => handleConfirmPassword(event)} type={passwordModeCon ? "password" : "text"} id="confirmPassword" className={`border-${inputTheme.confirmPassword}-300 text-${inputTheme.confirmPassword}-900 placeholder-${inputTheme.confirmPassword}-700 focus:ring-${inputTheme.confirmPassword}-500 focus:border-${inputTheme.confirmPassword}-500 dark:text-${inputTheme.confirmPassword}-500 dark:placeholder-${inputTheme.confirmPassword}-500 dark:border-${inputTheme.confirmPassword}-500 bg-white border-2 text-sm rounded-lg dark:bg-gray-700 block w-full p-2.5 focus:outline-none`} placeholder="تأكيد كلمة المرور" />
+                    <span className="eye" onClick={handlePasswordModeCon}>
+                      <i
+                        className={`fas fa-eye ${passwordModeCon ? "block" : "hidden"
+                          }`} 
+                          style={{color: inputTheme.confirmPassword}}
+                      />
+                      <i style={{color: inputTheme.confirmPassword}}
+                        className={`fas fa-eye-slash ${passwordModeCon ? "hidden" : "block"
+                          }`}
+                        id="hideEye"
+                      />
+                    </span>
                     <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning.confirmPassword}</span></p>
                   </div>
                   <button type='submit'

@@ -2,11 +2,11 @@ import { gapi } from 'gapi-script'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginSocialFacebook } from 'reactjs-social-login'
+import axios from 'axios'
 
-export default function SigInWithFacebook({ massage, path, updateIsLog }) {
+export default function SigInWithFacebook({ massage, updateIsLog, selectedUserType }) {
 
     const navigate = useNavigate();
-    const [users, setUsers] = useState(JSON.parse(localStorage.Users) || []);
     const [massageWarning, setMassageWarning] = useState('');
 
     const themeValue = {
@@ -16,50 +16,77 @@ export default function SigInWithFacebook({ massage, path, updateIsLog }) {
         normal: "teal"
     }
 
-    function checkSignIn(email, name) {
+    async function signUp(user) {
+        try {
+            const res = await axios.post(`http://localhost:8000/${selectedUserType === "donor" ? "donor" : "charity"}`, user);
+            console.log(res);
 
-        for (let index = 0; index < users.length; index++) {
-            if (email === users[index].email && name === users[index].name) {
-                return users[index];
+            if (!res.data.data.active && selectedUserType === "charity") {
+                setMassageWarning("تمت العملية بنجاح ،يجب عليك انتظار موافقة المسؤول الان، سوف تصلك رسالة بريد الكترونية عندما تتم الموافقة او الرفض");
+                return;
             }
+
+            localStorage.setItem("token", res.data.Token);
+            updateIsLog(true);
+            navigate("/");
+        } catch (err) {
+            console.error(err);
+            setMassageWarning("حدث خطأ ما او البريد مسجل بالفعل عن طريقة تسجيل اخرى");
         }
-        return false;
     }
 
-    function handleSignIn(response) {
+    async function logIn(user) {
 
-        const email = response.data.email;
-        const name = response.data.name;
+        if (selectedUserType !== "charity" && selectedUserType !== "donor") {
+            setMassageWarning("الرجاء ادخال نوع المستخدم");
+            return;
+        }
 
-        const isUser = checkSignIn(email, name)
-        if (isUser) {
-            sessionStorage.setItem('User', JSON.stringify(isUser));
+        try {
+            const res = await axios
+                .post(`http://localhost:8000/${selectedUserType === "donor" ? "Login_donor" : "Login_charity"}`, {
+                    email: user.email,
+                    password: user.password,
+                })
+
+            if (!res.data.data.active && selectedUserType === "charity") {
+                setMassageWarning("لم يتم الموفقة على الجهة الخيرية من قبل المسؤول بعد");
+                return;
+            }
+
+            localStorage.setItem("token", res.data.Token);
+            updateIsLog(true);
+            navigate("/");
+        } catch (err) {
+            console.log(err);
+            signUp(user)
         }
-        else {
-            const user = {
-                name: name,
-                email: email,
-                cart: []
-            };
-            setUsers([...users, user]);
-            sessionStorage.setItem('User', JSON.stringify(user));
-            localStorage.setItem('Users', JSON.stringify([...users, user]));
-        }
-        updateIsLog(true);
-        navigate(path);
     }
 
-    function handleError (error) {
-        setMassageWarning("Something went wrong, please try again later");
-        console.log("Sign With Facebook, Error  :" +  error);
+    async function handleSignIn(response) {
+
+        const user = {
+            username: response.data.name,
+            email: response.data.email,
+            password: response.data.id,
+            phone: "الرجاء ادخال رقم هاتف"
+        };
+        console.log(response, user);
+
+        logIn(user)
+    }
+
+    function handleError(error) {
+        setMassageWarning("حدث خطأ ما، الرجاء المحاولة فيما بعد");
+        console.log("Sign With Facebook, Error  :" + error);
     }
 
     return (
         <>
             <LoginSocialFacebook
-                appId= {process.env.REACT_APP_Facebook_Client_id}
-                onResolve= {handleSignIn}
-                onReject= {handleError}>
+                appId={process.env.REACT_APP_Facebook_Client_id}
+                onResolve={handleSignIn}
+                onReject={handleError}>
                 <button
                     class="sign-with-account w-full  max-w-xs font-bold shadow-md rounded-lg p-3 bg-indigo-100 text-gray-800 flex items-center justify-center hover:shadow-teal-600  transition duration-300 focus:shadow-none focus:translate-y-0.5 focus:scale-110 hover:-translate-y-1 hover:scale-110 mt-5"
                 >
@@ -70,8 +97,8 @@ export default function SigInWithFacebook({ massage, path, updateIsLog }) {
                         {massage}
                     </span>
                 </button>
-                
-            <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning}</span></p>
+
+                <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning}</span></p>
             </LoginSocialFacebook>
         </>
     )

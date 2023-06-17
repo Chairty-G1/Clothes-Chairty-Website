@@ -8,7 +8,7 @@ export default function Loader() {
     <GridLoader
         color={'#A0D8B3'}
         loading={true}
-        size={100}
+        size={20}
     />
     </div>
   )

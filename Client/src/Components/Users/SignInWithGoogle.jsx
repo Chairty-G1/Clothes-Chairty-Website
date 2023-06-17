@@ -1,11 +1,11 @@
 import { gapi } from 'gapi-script'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
-export default function SignInWithGoogle({massage, path, updateIsLog}) {
+export default function SignInWithGoogle({ massage, updateIsLog, selectedUserType }) {
 
     const navigate = useNavigate();
-    const [users, setUsers] = useState(JSON.parse(localStorage.Users) || []);
     const [massageWarning, setMassageWarning] = useState('');
 
     const themeValue = {
@@ -15,55 +15,86 @@ export default function SignInWithGoogle({massage, path, updateIsLog}) {
         normal: "teal"
     }
 
-    function checkSignIn(email, name) {
 
-        for (let index = 0; index < users.length; index++) {
-            if (email === users[index].email && name === users[index].name) {
-                return users[index];
+    async function signUp(user) {
+        try {
+            const res = await axios.post(`http://localhost:8000/${selectedUserType === "donor" ? "donor" : "charity"}`, user);
+            console.log(res);
+
+            if (!res.data.data.active && selectedUserType === "charity") {
+                setMassageWarning("لم يتم الموفقة على الجهة الخيرية من قبل المسؤول بعد");
+                return;
             }
+
+            localStorage.setItem("token", res.data.Token);
+            updateIsLog(true);
+            navigate("/");
+        } catch (err) {
+            console.error(err);
+            setMassageWarning("حدث خطأ ما او البريد مسجل بالفعل عن طريقة تسجيل اخرى");        
         }
-        return false;
     }
 
-    function handleSignIn(profile) {
+    async function logIn(user) {
 
-        const email = profile.getEmail();
-        const name = profile.getName();
+        if (selectedUserType !== "charity" && selectedUserType !== "donor") {
+            setMassageWarning("الرجاء ادخال نوع المستخدم");
+            return;
+        }
 
-        const isUser = checkSignIn(email, name)
-        if (isUser) {
-            sessionStorage.setItem('User', JSON.stringify(isUser));
+        try {
+            const res = await axios
+                .post(`http://localhost:8000/${selectedUserType === "donor" ? "Login_donor" : "Login_charity"}`, {
+                    email: user.email,
+                    password: user.password,
+                })
+
+            if (!res.data.data.active && selectedUserType === "charity") {
+                setMassageWarning("لم يتم الموفقة على الجهة الخيرية من قبل المسؤول بعد");
+                return;
+            }
+
+            localStorage.setItem("token", res.data.Token);
+            updateIsLog(true);
+            navigate("/");
+        } catch (err) {
+            console.log(err);
+            signUp(user)
         }
-        else {
-            const user = {
-                name: name,
-                email: email,
-                cart: []
-            };
-            setUsers([...users, user]);
-            sessionStorage.setItem('User', JSON.stringify(user));
-            localStorage.setItem('Users', JSON.stringify([...users, user]));
-        }
-        updateIsLog(true);
-        navigate(path);
+    }
+
+    async function handleSignIn(profile) {
+
+        const user = {
+            username: profile.getName(),
+            email: profile.getEmail(),
+            password: profile.NT,
+            phone: "الرجاء ادخال رقم هاتف"
+        };
+
+        logIn(user)
     }
 
     const startApp = () => {
         window.gapi.load("auth2", function () {
             window.gapi.auth2
                 .init({
-                    client_id: process.env.REACT_APP_Google_Client_id,
+                    client_id: process.env.REACT_APP_Google_Client_id
                 })
                 .then((auth2) => {
                     const customBtn = document.getElementById("customBtn");
                     customBtn.addEventListener("click", () => {
-                        auth2.signIn().then((googleUser) => {
-                            handleSignIn(googleUser.getBasicProfile());
-
-                        }).catch((error) => {
-                            setMassageWarning("Something went wrong, please try again later");
-                            console.log("Sign With google, Error :" +  error);
-                        });
+                        auth2
+                            .signIn()
+                            .then((googleUser) => {
+                                handleSignIn(googleUser.getBasicProfile());
+                            })
+                            .catch((error) => {
+                                setMassageWarning(
+                                    "Something went wrong, please try again later"
+                                );
+                                console.log(error);
+                            });
                     });
                 });
         });
