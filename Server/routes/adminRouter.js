@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
 const authController = require("../controllers/authController");
+const verifyJWT = require("../middleware/verifyJWT");
 
 
 router.get("/admin", adminController.allAdmins);

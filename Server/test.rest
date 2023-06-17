@@ -41,10 +41,10 @@ POST http://localhost:8000/admin
 Content-Type: application/json
 
 {
-    "username": "ahmad",
-    "email": "omar3@gmail.com",
-    "password": "1234",
-    "phone": "phone"
+    "username": "admin",
+    "email": "admin@gmail.com",
+    "password": "123Omar!",
+    "phone": "0778788014"
 }
 
 ###
@@ -56,3 +56,8 @@ Content-Type: application/json
     "email": "omar12@gmail.com",
     "password": "1234"
 }
+
+###
+
+GET http://localhost:8000/Verify_token
+authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhkOTBjMzZlNWUwNzZjM2FhOTNkM2QiLCJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTY4NzAwMTI1MiwiZXhwIjoxNjg3NjA2MDUyfQ.FKZNwZQdTkXVwlzxBMATvxVVXJGe0zrRQOLwuv6rZ5w

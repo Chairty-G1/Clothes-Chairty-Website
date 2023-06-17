@@ -23,7 +23,7 @@ const charitiesSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true,
-    maxlength: 20,
+    maxlength: 50,
   },
   is_delete: {
     type: Boolean,

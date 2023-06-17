@@ -35,7 +35,7 @@ const newCharity = async (req, res, next) => {
     const hashedPwd = await bcrypt.hash(password, 10);
 
     const newCharity = new Charity({
-        role: 'Charity',
+        role: 'charity',
         username: username,
         email: email,
         password: hashedPwd,
