@@ -8,7 +8,7 @@ const errorHandler = require("../middleware/500");
 const createToken = (req, res) => {
 
   const accessToken = jwt.sign(
-    JSON.parse(JSON.stringify({ userId: req.body._id, role: req.body.role })),
+    JSON.parse(JSON.stringify({ userId: req.body._id, role: req.body.role, email: req.body.email })),
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: "1w" }
   );
