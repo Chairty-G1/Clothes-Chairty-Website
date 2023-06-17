@@ -8,16 +8,25 @@ function Profile() {
   const [choise, setChoise] = useState("الصفحة الشخصية");
   const [donorDetails, setDonorDetails] = useState([]);
 
+  const role = "doner";
+  const id = `648d91466e5e076c3aa93d41`;
+
 
   useEffect(() => {
+    if (role === "doner"){
     axios
-      .get(`http://localhost:8000/donor`)
+      .get(`http://localhost:8000/donor/${id}`)
       .then((response) => {
         setDonorDetails(response.data);
       })
       .catch((error) => {
         console.log(error.message);
       });
+    }
+    else {
+      console.log("you not doner");
+    }
+    
   }, []);
 
   return (
@@ -112,9 +121,6 @@ function Profile() {
               </a>
             </li> */}
 
-
-
-
             <li className=" cursor-pointer">
               <a
                 smooth="true"
@@ -138,28 +144,6 @@ function Profile() {
           </ul>
         </div>
       </aside>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <div className="p-4 m-5 sm:ml-64">
         <div className="p-4 bg-white rounded-lg">
@@ -198,42 +182,6 @@ function Profile() {
               </div>
             </>
           )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
           {choise === "السجل" && (
             <>
