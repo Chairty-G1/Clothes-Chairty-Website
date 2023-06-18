@@ -18,7 +18,6 @@ const orderMovementsSchema = new mongoose.Schema({
   },
   donor_id: {
     type: String,
-    required: true,
   },
   status: {
     type: Boolean,
