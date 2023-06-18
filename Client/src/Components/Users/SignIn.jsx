@@ -131,10 +131,9 @@ export default function SignIn({ updateIsLog }) {
         localStorage.setItem("token", res.data.Token);
         updateIsLog(true);
         navigate(path);
-        console.log(res);
 
       } catch (err) {
-        console.log(err.response.data, selectedUserType)
+
         if (err.response.data ==="Don't have access" && selectedUserType === "charity") {
           setMassageWarning({
             ...massageWarning,

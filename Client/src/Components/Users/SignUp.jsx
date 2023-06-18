@@ -250,13 +250,6 @@ export default function SignUp({ updateIsLog }) {
       return;
     }
 
-    console.log(      checkInput.username ,
-      checkInput.email ,
-      checkInput.phone ,
-      checkInput.password ,
-      checkInput.confirmPassword ,
-      checkInput.type , 
-      )
     if (
       checkInput.username &&
       checkInput.email &&

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import heroBg from "../../Images/donation7.webp";
 import Loader from "../Website/Loader";
+import NotFound from "../Website/NotFound";
 import useFetch from "../../CustomHooks/UseFetch";
 
 const DonationsDetails = ({ }) => {
@@ -80,22 +81,18 @@ const DonationsDetails = ({ }) => {
     }
   };
 
-  if (loading) {
+  if (loading || !data) {
     return <Loader />;
   }
 
   if (error) {
-    return <div>Donation not found</div>;
-  }
-
-  if (!data) {
-    return <div>Loading data...</div>;
+    return <NotFound />;
   }
 
   const donation = data.find((item) => item._id === donationId);
 
   if (!donation) {
-    return <div>Donation not found</div>;
+    return <NotFound />;
   }
 
   return (
