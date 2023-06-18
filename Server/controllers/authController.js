@@ -22,7 +22,7 @@ const loginDonor = async (req, res, next) => {
   try {
     const user = await Donor.findOne({ email: email });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password)) || user.is_delete) {
 
       return res.status(401).send("incorrect email or password");
     }
@@ -40,7 +40,7 @@ const loginAdmin = async (req, res, next) => {
   try {
     const user = await Admin.findOne({ email: email });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password)) || user.is_delete) {
 
       return res.status(401).send("incorrect email or password");
     }
@@ -58,7 +58,7 @@ const loginCharity = async (req, res, next) => {
   try {
     const user = await Charity.findOne({ email: email });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password)) || user.is_delete) {
 
       return res.status(401).send("incorrect email or password");
     }

@@ -3,7 +3,7 @@ GET http://localhost:8000/
 
 ###
 
-GET http://localhost:8000/admin
+GET http://localhost:8000/donor
 
 ###
 

@@ -46,9 +46,51 @@ export default function Header({ isLog, updateIsLog }) {
             <div class="sm:flex sm:gap-4">
                {
                   isLog ?
-                     <Link onClick={handleLogOut} to="/signIn" className='block rounded-md bg-teal-600 px-8 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700'>تسجيل الخروج</Link>
+                     <>
+
+                        <Link onClick={handleLogOut} to="/signIn" className='flex items-center rounded-md bg-teal-600 px-8 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700'>تسجيل الخروج</Link>
+                        <Link
+                           to="/profile"
+                           className="rounded-md bg-teal-600 px-8 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 flex items-center"
+                        >
+                           <span className="mr-1">الملف الشخصي</span>
+                           <svg
+                              viewBox="0 0 512 512"
+                              width="30"
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="fill-current text-gray-800"
+                           >
+                              <path
+                                 d="M369.5 135.9c0 67.1-50.8 161.3-113.5 161.3S142.5 203 142.5 135.9 193.3 14.3 256 14.3s113.5 54.4 113.5 121.6z"
+                                 fill="#e5e3e2"
+                                 stroke="#2c3e50"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 stroke-miterlimit="10"
+                              ></path>
+                              <path
+                                 d="M193.2 188.5h125.5s-8.6 61.1-62.7 62c-54.2.8-62.8-62-62.8-62z"
+                                 fill="#ffffff"
+                                 stroke="#2c3e50"
+                                 stroke-width="11"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 stroke-miterlimit="10"
+                              ></path>
+                              <path
+                                 d="M464.1 365.8c-19-18-131.7-51.2-131.7-51.2l-76.3 85.3h0l-76.3-85.3S67.1 347.8 48.1 365.8c-29.3 27.7-31.6 132-31.6 132h479.2c-.1-.1-2.3-104.3-31.6-132z"
+                                 fill="#0d9488"
+                                 stroke="#fff"
+                                 stroke-width="20"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 stroke-miterlimit="10"
+                              ></path>
+                           </svg>
+                        </Link>
+                     </>
                      :
-                     <Link to="/signIn" className='block rounded-md bg-teal-600 px-8 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700'>تسجيل الدخول</Link>
+                     <Link to="/signIn" className='rounded-md bg-teal-600 px-8 py-4 text-sm font-medium text-white transition hover:bg-teal-700 flex items-center'>تسجيل الدخول</Link>
                }
             </div>
             <div class="flex flex-1 items-center justify-end">
