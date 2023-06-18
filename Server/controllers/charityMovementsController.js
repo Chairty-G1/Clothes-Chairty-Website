@@ -13,17 +13,18 @@ const allCharityMovement = (req, res) => {
 
 const oneCharityMovement = async (req, res) => {
     const id = req.params.id;
-    const user = await CharityMovements.find({ _id: id });
-    res.json(user);
+    const move = await CharityMovements.find({ _id: id });
+    res.json(move);
 };
 
 const newCharityMovement = async (req, res) => {
 
-    const { destination, order_id, charityId } = req.body;
+    const { destination, order_id, charityId, email } = req.body;
 
     const currentDate = new Date();
     const newCharityMovements = new CharityMovements({
         status: false,
+        email: email,
         destination: destination,
         date: currentDate.toLocaleString(),
         order_id: order_id,

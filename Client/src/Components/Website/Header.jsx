@@ -1,18 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ScarfOfHope from '../../Images/ScarfOfHope.png'
+import axios from "axios";
+
 export default function Header({ isLog, updateIsLog }) {
 
    const [nav, setNav] = useState(false);
+   const [userRole, setUserRole] = useState();
+
+   async function verifyToken() {
+      const token = localStorage.getItem("token") || false;
+
+      if (token) {
+         try {
+            const res = await axios.get(`http://localhost:8000/Verify_token`, {
+               headers: {
+                  authorization: `Bearer ${token}`,
+               },
+            });
+
+            setUserRole(res.data.role)
+         } catch (error) {
+            console.log(error);
+         }
+      }
+   }
+
+   useEffect(() => {
+      verifyToken();
+      window.scrollTo(0, 0);
+   }, [isLog]);
 
    function handleLogOut() {
       localStorage.removeItem('token');
       updateIsLog(false)
+      setUserRole('')
    }
 
    return (
 
-      <header aria-label="Site Header" class="bg-white">
+      <header aria-label="Site Header" class="bg-white" id='Nav'>
          <div
             class="mx-auto flex h-24 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
          >
@@ -45,9 +72,12 @@ export default function Header({ isLog, updateIsLog }) {
                <nav className={`md:hidden fixed top-[0px] rounded-md  w-60 border-teal-600	border-2	 bg-gray-100 z-40 duration-700 ${nav ? "right-[53px] top-[53px]" : "right-[-100vw]"
                   } `}>
                   <ul class="flex flex-col items-center" dir="rtl">
-                     <li>
-                        <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>التبرعات</Link>
-                     </li>
+                     {
+                        userRole === 'charity' &&
+                        <li>
+                           <Link to="/donations" className='text-gray-500 font-bold transition hover:text-teal-600'>التبرعات</Link>
+                        </li>
+                     }
                      <li>
                         <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>عنا</Link>
                      </li>
@@ -70,9 +100,12 @@ export default function Header({ isLog, updateIsLog }) {
 
                <nav aria-label="Site Nav" class="hidden md:block">
                   <ul class="flex items-center gap-6 text-sm ">
-                     <li>
-                        <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>التبرعات</Link>
-                     </li>
+                     {
+                        userRole === 'charity' &&
+                        <li>
+                           <Link to="/donations" className='text-gray-500 font-bold transition hover:text-teal-600'>التبرعات</Link>
+                        </li>
+                     }
                      <li>
                         <Link to="/aboutUs" className='text-gray-500 font-bold transition hover:text-teal-600'>عنا</Link>
                      </li>
@@ -99,11 +132,9 @@ export default function Header({ isLog, updateIsLog }) {
                <Link to="/" className='block text-teal-600'>
                   <a class="block text-teal-600" href="/">
                      <span class="sr-only">Home</span>
-
                      <div class="flex-shrink-0 justify-center">
                         <img src={ScarfOfHope} alt="Workflow logo" width={150} />
                      </div>
-
                   </a>
                </Link>
 

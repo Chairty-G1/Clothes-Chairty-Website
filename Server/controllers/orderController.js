@@ -36,23 +36,25 @@ const AllOrderByEmail = async (req, res) => {
 
 const newOrder = async (req, res) => {
 
-    const { order_status, description, number_pieces, address, name, email, phone } = req.body;
-
-    const newOrder = new Order({
-        order_status: order_status,
-        description: description,
-        number_pieces: number_pieces,
-        address: address,
-        name: name,
-        email: email,
-        phone: phone,
-        available: true,
-        active: false
-    });
-
-    const order = await newOrder.save();
-    res.json(order);
-};
+   
+    const formData = req.body;
+   
+       const newOrder = new Order({
+           order_status: formData.order_status,
+           description: formData.description,
+           number_pieces: formData.number_pieces,
+           address: formData.address,
+           type: formData.type,
+           name: formData.name,
+           email: formData.email,
+           phone: formData.phone,
+           available: true,
+           active: false
+       });
+       const order = await newOrder.save();
+       res.json(order);
+       console.log(formData);
+   };
 
 const updateOrder = async (req, res) => {
     const orderId = req.params.id;

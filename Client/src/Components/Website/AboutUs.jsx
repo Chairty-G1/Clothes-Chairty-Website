@@ -1,153 +1,366 @@
 import React, { useEffect } from 'react'
 import './../../CSS/About.css'
+import './../../CSS/Idea.css'
+import IdeaImage from '../../Images/Idea.png'
+import aboutimage from '../../Images/aboutus.jpg'
 
 export default function AboutUs() {
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="landing flex justify-center items-center w-full">
-      </div>
-      <div className="cards flex flex-col justify-center items-center w-11/12">
-        <div className="ourStory">
-          <h1 className="p-5 font-bold text-2xl text-center main-green">Our story</h1>
-          <p className="md:text-lg text-lg font-medium">
-            Our team of five programmers from the Orange Academy of Programming shared a common passion for coding and e-commerce. We wanted to create an exceptional online shopping experience that would stand out from the rest.
+    <>
+      <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
+        <div className="flex flex-col lg:flex-row justify-between gap-8">
+          <div className="w-full lg:w-5/12 flex flex-col justify-center">
+            <h1 className="text-3xl lg:text-4xl font-bold leading-9 text-gray-800 pb-4" dir="rtl">عنا </h1>
+            <p className="font-normal text-base leading-6 text-gray-600 " dir="rtl">وشاح الامل هو منصة إلكترونية تهدف إلى جمع الملابس المستخدمة أو الجديدة من الأفراد وتوزيعها على الأشخاص المحتاجين أو المجتمعات ذات الدخل المحدود. يعد هذا الموقع وسيلة مريحة للمتبرعين للتخلص من الملابس الغير مرغوب فيها وتوجيهها إلى الأشخاص الذين يحتاجونها بدلاً من التخلص منها في المزبلة.
 
-            We spent countless hours coding, testing, and refining our e-commerce site. Our main focus was on ensuring that our site was easy to use, with a sleek design and user-friendly interface. We also prioritized the security and speed of the checkout process, ensuring that our customers could make purchases quickly and safely.
-
-            As we launched our site, we were thrilled to see that it was an instant hit among shoppers. Customers praised our wide selection of products and the convenience of our site. We continued to innovate, adding new features and functionalities that set us apart from our competitors.
-
-            Our passion for programming drove us to constantly improve our e-commerce site. We listened to customer feedback and made changes accordingly, striving to create the best possible online shopping experience.
-
-            Looking back, we're proud of what we accomplished as a team. Our e-commerce site became a huge success, and it was all thanks to our shared passion for programming and dedication to creating something exceptional.
-          </p>
+              تتم عملية التبرع عبر الموقع بشكل سهل وبسيط. يمكن للأفراد تسجيل حساب مجاني على الموقع وملء بعض المعلومات الأساسية. بعد ذلك، يتمكن المتبرعون من إضافة التفاصيل حول الملابس التي يودون التبرع بها، مثل النوع، والحجم، والحالة (جديدة أو مستعملة). يمكن أيضًا تحميل صور للملابس لتوضيح مظهرها وحالتها العامة.</p>
+          </div>
+          <div className="w-full lg:w-8/12 ">
+            <img className="w-full h-full" src={aboutimage} alt="A group of People" />
+          </div>
         </div>
+
+        <>
+          {/* Container for demo purpose */}
+          <div className="container my-24 mx-auto md:px-6">
+            {/* Section: Design Block */}
+            <section className="mb-32 text-center">
+              <h2 className="mb-12 text-3xl font-bold">
+                فريقنا <u className="text-primary dark:text-primary-400"></u>
+              </h2>
+              <div className="lg:gap-xl-12 grid gap-x-6 md:grid-cols-2 lg:grid-cols-4">
+                <div className="mb-12 lg:mb-0">
+                  <img
+                    className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
+                    src="https://cdn.discordapp.com/attachments/1118818677110866012/1119979426977943562/profile-pic..png"
+                    alt="avatar"
+                  />
+                  <h5 className="mb-4 text-lg font-bold">عمر </h5>
+                  <p className="mb-6">مطور ويب</p>
+                  <ul className="mx-auto flex list-inside justify-center">
+                    <a href="https://github.com/OmarHassouna-PS" className="px-2">
+                      {/* GitHub */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                        />
+                      </svg>
+                    </a>
+                  
+                    <a href="https://www.linkedin.com/in/omar-hassouna-97b76b1aa/" className="px-2">
+                      {/* Linkedin */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
+                        />
+                      </svg>
+                    </a>
+                  </ul>
+                </div>
+                <div className="mb-12 lg:mb-0">
+                  <img
+                    className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
+                    src="https://cdn.discordapp.com/attachments/1093684184775659631/1119980731603636295/1567681432510-removebg-preview.png"
+                    alt="avatar"
+                  />
+                  <h5 className="mb-4 text-lg font-bold">علي</h5>
+                  <p className="mb-6">مطور ويب</p>
+                  <ul className="mx-auto flex list-inside justify-center">
+                    <a href="https://github.com/Ali-alterawi/" className="px-2">
+                      {/* GitHub */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                        />
+                      </svg>
+                    </a>
+                   
+                    <a href="https://www.linkedin.com/in/ali-al-terawi-332603181/" className="px-2">
+                      {/* Linkedin */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
+                        />
+                      </svg>
+                    </a>
+                  </ul>
+                </div>
+                <div className="mb-12 md:mb-0">
+                  <img
+                    className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
+                    src="https://cdn.discordapp.com/attachments/1087291162840281098/1119982029526802492/ME.png"
+                    alt="avatar"
+                  />
+                  <h5 className="mb-4 text-lg font-bold">عصام</h5>
+                  <p className="mb-6">مطور ويب</p>
+                  <ul className="mx-auto flex list-inside justify-center">
+                  <a href="https://github.com/Ali-alterawi/" className="px-2">
+                      {/* GitHub */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Linkedin */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
+                        />
+                      </svg>
+                    </a>
+                  </ul>
+                </div>
+                <div className="mb-12 md:mb-0">
+                  <img
+                    className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).jpg"
+                    alt="avatar"
+                  />
+                  <h5 className="mb-4 text-lg font-bold">Emma Lovelace</h5>
+                  <p className="mb-6">Web Designer</p>
+                  <ul className="mx-auto flex list-inside justify-center">
+                    <a href="#!" className="px-2">
+                      {/* Dribbble */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 0c-6.628 0-12 5.373-12 12s5.372 12 12 12 12-5.373 12-12-5.372-12-12-12zm9.885 11.441c-2.575-.422-4.943-.445-7.103-.073-.244-.563-.497-1.125-.767-1.68 2.31-1 4.165-2.358 5.548-4.082 1.35 1.594 2.197 3.619 2.322 5.835zm-3.842-7.282c-1.205 1.554-2.868 2.783-4.986 3.68-1.016-1.861-2.178-3.676-3.488-5.438.779-.197 1.591-.314 2.431-.314 2.275 0 4.368.779 6.043 2.072zm-10.516-.993c1.331 1.742 2.511 3.538 3.537 5.381-2.43.715-5.331 1.082-8.684 1.105.692-2.835 2.601-5.193 5.147-6.486zm-5.44 8.834l.013-.256c3.849-.005 7.169-.448 9.95-1.322.233.475.456.952.67 1.432-3.38 1.057-6.165 3.222-8.337 6.48-1.432-1.719-2.296-3.927-2.296-6.334zm3.829 7.81c1.969-3.088 4.482-5.098 7.598-6.027.928 2.42 1.609 4.91 2.043 7.46-3.349 1.291-6.953.666-9.641-1.433zm11.586.43c-.438-2.353-1.08-4.653-1.92-6.897 1.876-.265 3.94-.196 6.199.196-.437 2.786-2.028 5.192-4.279 6.701z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Linkedin */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Instagram */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                        />
+                      </svg>
+                    </a>
+                  </ul>
+                </div>
+
+
+              </div>
+            </section>
+            {/* Section: Design Block */}
+          </div>
+          <div className="container my-24 mx-auto md:px-6">
+            {/* Section: Design Block */}
+            <section className="mb-32 text-center">
+
+              <div className="lg:gap-xl-12 grid gap-x-6 md:grid-cols-2 lg:grid-cols-4">
+                <div className="mb-12 lg:mb-0">
+                  <img
+                    className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).jpg"
+                    alt="avatar"
+                  />
+                  <h5 className="mb-4 text-lg font-bold">Alan Turing</h5>
+                  <p className="mb-6">Frontend Developer</p>
+                  <ul className="mx-auto flex list-inside justify-center">
+                    <a href="#!" className="px-2">
+                      {/* GitHub */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Twitter */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Linkedin */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
+                        />
+                      </svg>
+                    </a>
+                  </ul>
+                </div>
+                <div className="mb-12 lg:mb-0">
+                  <img
+                    className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).jpg"
+                    alt="avatar"
+                  />
+                  <h5 className="mb-4 text-lg font-bold">Veronica Smith</h5>
+                  <p className="mb-6">Backend Developer</p>
+                  <ul className="mx-auto flex list-inside justify-center">
+                    <a href="#!" className="px-2">
+                      {/* GitHub */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Twitter */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Linkedin */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
+                        />
+                      </svg>
+                    </a>
+                  </ul>
+                </div>
+                <div className="mb-12 md:mb-0">
+                  <img
+                    className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).jpg"
+                    alt="avatar"
+                  />
+                  <h5 className="mb-4 text-lg font-bold">Tom Johnson</h5>
+                  <p className="mb-6">Digital Marketing Analyst</p>
+                  <ul className="mx-auto flex list-inside justify-center">
+                    <a href="#!" className="px-2">
+                      {/* Facebook */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Twitter */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-4 w-4 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                        />
+                      </svg>
+                    </a>
+                    <a href="#!" className="px-2">
+                      {/* Linkedin */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5 text-primary dark:text-primary-400"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"
+                        />
+                      </svg>
+                    </a>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </>
       </div>
-
-
-      <h1 className="text-center p-5 font-bold text-2xl main-green our-team">Our Team</h1>
-
-
-      <div className="team flex flex-col md:flex-row gap-8 w-11/12">
-        <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
-          <img
-            class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-            // src={Bashar}
-            alt="Bashar"
-            width="384"
-            height="512"
-          />
-          <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-            <blockquote>
-              <p class="text-lg font-medium">
-                “As a Full Stack Developer, I have a passion for creating dynamic and responsive web applications while utilizing a wide range of technologies to bring ideas to life.”
-              </p>
-            </blockquote>
-            <figcaption class="font-medium">
-              <div class="text-sky-500 dark:text-sky-400"><a href="https://www.linkedin.com/in/bashar-omush-b12a06267/" target='_blank'>Bashar Al-Omoush</a></div>
-              <div class="text-slate-700 dark:text-slate-500">
-                Full Stack Devoloper, Jordan
-              </div>
-            </figcaption>
-          </div>
-        </figure>
-        <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
-          <img
-            class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-            // src={Iyad}
-            alt="Iyad"
-            width="384"
-            height="512"
-          />
-          <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-            <blockquote>
-              <p class="text-lg font-medium">
-                “As a Full Stack Developer, I have a passion for creating dynamic and responsive web applications while utilizing a wide range of technologies to bring ideas to life.”
-              </p>
-            </blockquote>
-            <figcaption class="font-medium">
-              <div class="text-sky-500 dark:text-sky-400"><a href="https://www.linkedin.com/in/iyad-raslan-4221591a1/" target='_blank'>Iyad Raslan</a></div>
-              <div class="text-slate-700 dark:text-slate-500">
-                Full Stack Devoloper, Jordan
-              </div>
-            </figcaption>
-          </div>
-        </figure>
-      </div>
-
-      <figure class="team my-8 md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800 w-11/12">
-        <img
-          class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-          // src={Omar}
-          alt="Omar"
-          width="384"
-          height="512"
-        />
-        <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-          <blockquote>
-            <p class="text-lg font-medium">
-              “As a Full Stack Developer, I have a passion for creating dynamic and responsive web applications while utilizing a wide range of technologies to bring ideas to life.”
-            </p>
-          </blockquote>
-          <figcaption class="font-medium">
-            <div class="text-sky-500 dark:text-sky-400"><a href="https://www.linkedin.com/in/omar-hassouna-97b76b1aa/" target="_blank">Omar Hassoneh</a></div>
-            <div class="text-slate-700 dark:text-slate-500">
-              Full Stack Devoloper, Jordan
-            </div>
-          </figcaption>
-        </div>
-      </figure>
-
-      <div className="team flex flex-col md:flex-row gap-8 mb-8 w-11/12">
-        <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
-          <img
-            class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-            // src={Tamara}
-            alt="Tamara"
-            width="384"
-            height="512"
-          />
-          <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-            <blockquote>
-              <p class="text-lg font-medium">
-                “As a Full Stack Developer, I have a passion for creating dynamic and responsive web applications while utilizing a wide range of technologies to bring ideas to life.”
-              </p>
-            </blockquote>
-            <figcaption class="font-medium">
-              <div class="text-sky-500 dark:text-sky-400"><a href="https://github.com/tamarabanighanem" target="_blank">Tamara Bani-Ghanem</a></div>
-              <div class="text-slate-700 dark:text-slate-500">
-                Full Stack Devoloper, Jordan
-              </div>
-            </figcaption>
-          </div>
-        </figure>
-        <figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
-          <img
-            class="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-            // src={Amro}
-            alt="Amro"
-            width="384"
-            height="512"
-          />
-          <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-            <blockquote>
-              <p class="text-lg font-medium">
-                “As a Full Stack Developer, I have a passion for creating dynamic and responsive web applications while utilizing a wide range of technologies to bring ideas to life.”
-              </p>
-            </blockquote>
-            <figcaption class="font-medium">
-              <div class="text-sky-500 dark:text-sky-400"><a href="https://github.com/amrokh1996" target="_blank">Amro Al-Khazaleh</a></div>
-              <div class="text-slate-700 dark:text-slate-500">
-                Full Stack Devoloper, Jordan
-              </div>
-            </figcaption>
-          </div>
-        </figure>
-      </div>
-    </div>
+    </>
   );
 }

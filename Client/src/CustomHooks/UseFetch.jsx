@@ -10,7 +10,7 @@ export default function useFetch(url) {
     useEffect(() => {
         setLoading(true)
         axios.get(url).then(response => {
-            setData(response.data.products)
+            setData(response.data)
         }).catch((error) => {
             setError(error)
         }).finally(() => {

@@ -46,7 +46,8 @@ export default function SignUp({ updateIsLog }) {
     username: '',
     phone: '',
     email: '',
-    password: ''
+    password: '',
+    serial: ''
   })
 
   const [checkInput, setCheckInput] = useState({
@@ -55,7 +56,9 @@ export default function SignUp({ updateIsLog }) {
     email: false,
     password: false,
     confirmPassword: false,
-    type: false
+    type: false,
+    serial: false
+
   });
 
   const themeValue = {
@@ -70,7 +73,8 @@ export default function SignUp({ updateIsLog }) {
     password: themeValue.normal,
     username: themeValue.normal,
     phone: themeValue.normal,
-    confirmPassword: themeValue.normal
+    confirmPassword: themeValue.normal,
+    serial: themeValue.normal
   });
 
   const [massageWarning, setMassageWarning] = useState({
@@ -79,9 +83,10 @@ export default function SignUp({ updateIsLog }) {
     email: '',
     password: '',
     confirmPassword: '',
-    submit: ''
+    submit: '',
+    serial_number: ''
   });
-  
+
   const [selectedUserType, setSelectedUserType] = useState("");
   const [passwordMode, setPasswordMode] = useState(true);
   const [passwordModeCon, setPasswordModeCon] = useState(true);
@@ -114,6 +119,21 @@ export default function SignUp({ updateIsLog }) {
     }
   }
 
+  function handleSerialNumber(event) {
+    const serial = event.target.value;
+    setCheckInput({ ...checkInput, serial: false });
+
+    if (serial === '') {
+      setInputTheme({ ...inputTheme, serial: themeValue.normal });
+      setMassageWarning({ ...massageWarning, serial: 'حقل مطلوب' });
+    }
+    else {
+      setInputTheme({ ...inputTheme, serial: themeValue.success })
+      setMassageWarning({ ...massageWarning, serial: '' });
+      setUser({ ...user, serial_number: serial });
+      setCheckInput({ ...checkInput, serial: true });
+    }
+  }
   function handleName(event) {
     const username = event.target.value;
     setCheckInput({ ...checkInput, username: false });
@@ -218,6 +238,25 @@ export default function SignUp({ updateIsLog }) {
   function handleSubmit(event) {
     event.preventDefault();
 
+    if (selectedUserType === "donor") {
+      delete user.serial_number;
+    }
+    else if (!checkInput.serial) {
+      setMassageWarning({
+        ...massageWarning,
+        submit:
+          "الرجاء ادخال رقم وطني صالح",
+      });
+      return;
+    }
+
+    console.log(      checkInput.username ,
+      checkInput.email ,
+      checkInput.phone ,
+      checkInput.password ,
+      checkInput.confirmPassword ,
+      checkInput.type , 
+      )
     if (
       checkInput.username &&
       checkInput.email &&
@@ -247,7 +286,7 @@ export default function SignUp({ updateIsLog }) {
           submit: "تمت العملية بنجاح ،يجب عليك انتظار موافقة المسؤول الان، سوف تصلك رسالة بريد الكترونية عندما تتم الموافقة او الرفض",
         });
         return;
-    }
+      }
 
       localStorage.setItem("token", res.data.Token);
       updateIsLog(true);
@@ -331,8 +370,18 @@ export default function SignUp({ updateIsLog }) {
               </div>
               <form onSubmit={(event) => handleSubmit(event)}>
                 <div class="mx-auto max-w-xs">
+                  {
+                    selectedUserType === "charity" ?
+                      <div class="mb-3">
+                        <label for="name" className={`block mb-2 text-sm font-medium text-${inputTheme.serial}-700 dark:text-${inputTheme.serial}-500 `}>الرقم الوطني للمنشأة</label>
+                        <input onChange={(event) => handleSerialNumber(event)} type="text" id="name" className={`border-${inputTheme.serial}-300 text-${inputTheme.serial}-900 dark:text-${inputTheme.serial}-400 placeholder-${inputTheme.serial}-700 dark:placeholder-${inputTheme.serial}-500 focus:ring-${inputTheme.serial}-500 focus:border-${inputTheme.serial}-500 dark:border-${inputTheme.serial}-500 bg-white border-2 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 focus:outline-none`} placeholder="الرجاء ادخال الرقم الوطني للمنشأة" />
+                        <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning.serial_number}</span></p>
+                      </div>
+                      :
+                      <></>
+                  }
                   <div class="mb-3">
-                    <label for="name" className={`block mb-2 text-sm font-medium text-${inputTheme.username}-700 dark:text-${inputTheme.username}-500 `}>الاسم</label>
+                    <label for="name" className={`block mb-2 text-sm font-medium text-${inputTheme.username}-700 dark:text-${inputTheme.username}-500 `}>{selectedUserType === "charity" ? "اسم الجمعية" : "الاسم"}</label>
                     <input onChange={(event) => handleName(event)} type="text" id="name" className={`border-${inputTheme.username}-300 text-${inputTheme.username}-900 dark:text-${inputTheme.username}-400 placeholder-${inputTheme.username}-700 dark:placeholder-${inputTheme.username}-500 focus:ring-${inputTheme.username}-500 focus:border-${inputTheme.username}-500 dark:border-${inputTheme.username}-500 bg-white border-2 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 focus:outline-none`} placeholder="ادخل اسمك" />
                     <p className={`mt-2 text-sm text-${themeValue.warning}-600 dark:text-${themeValue.warning}-500`}><span class="font-medium">{massageWarning.name}</span></p>
                   </div>
@@ -350,12 +399,12 @@ export default function SignUp({ updateIsLog }) {
                     <label for="password" className={`text-${inputTheme.password}-700 dark:text-${inputTheme.password}-500 block mb-2 text-sm font-medium`}>كلمة المرور</label>
                     <input onChange={(event) => handlePassword(event)} type={passwordMode ? "password" : "text"} id="password" className={`border-${inputTheme.password}-300 text-${inputTheme.password}-900 placeholder-${inputTheme.password}-700 focus:ring-${inputTheme.password}-500 focus:border-${inputTheme.password}-500 dark:text-${inputTheme.password}-500 dark:placeholder-${inputTheme.password}-500 dark:border-${inputTheme.password}-500 bg-white border-2 text-sm rounded-lg dark:bg-gray-700 block w-full p-2.5 focus:outline-none`} placeholder="ادخل كلمة المرور" />
                     <span className="eye" onClick={handlePasswordMode}>
-                      <i style={{color: inputTheme.password}}
+                      <i style={{ color: inputTheme.password }}
                         className={`fas fa-eye ${passwordMode ? "block" : "hidden"
                           }`}
                         id="showEye"
                       />
-                      <i style={{color: inputTheme.password}}
+                      <i style={{ color: inputTheme.password }}
                         className={`fas fa-eye-slash ${passwordMode ? "hidden" : "block"
                           }`}
                         id="hideEye"
@@ -369,10 +418,10 @@ export default function SignUp({ updateIsLog }) {
                     <span className="eye" onClick={handlePasswordModeCon}>
                       <i
                         className={`fas fa-eye ${passwordModeCon ? "block" : "hidden"
-                          }`} 
-                          style={{color: inputTheme.confirmPassword}}
+                          }`}
+                        style={{ color: inputTheme.confirmPassword }}
                       />
-                      <i style={{color: inputTheme.confirmPassword}}
+                      <i style={{ color: inputTheme.confirmPassword }}
                         className={`fas fa-eye-slash ${passwordModeCon ? "hidden" : "block"
                           }`}
                         id="hideEye"

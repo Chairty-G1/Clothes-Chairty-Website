@@ -20,6 +20,10 @@ const charitiesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  serial_number: {
+    type: String,
+    required: true,
+  },
   phone: {
     type: String,
     required: true,

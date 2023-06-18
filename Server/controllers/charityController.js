@@ -21,7 +21,7 @@ const oneCharity = async (req, res) => {
 
 const newCharity = async (req, res, next) => {
 
-    const { username, email, password, phone } = req.body;
+    const { username, email, password, phone, serial_number } = req.body;
 
     try {
         const user = await Charity.findOne({ email: email });
@@ -36,6 +36,7 @@ const newCharity = async (req, res, next) => {
 
     const newCharity = new Charity({
         role: 'charity',
+        serial_number : serial_number,
         username: username,
         email: email,
         password: hashedPwd,

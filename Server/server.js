@@ -10,6 +10,7 @@ const logInRouts = require('./routes/logInRouter');
 const orderRouter = require('./routes/orderRouter');
 const charityMovementsRouter = require('./routes/charityMovementsRouter');
 const donorMovementsRouter = require('./routes/donorMovementsRouter');
+const statisticsRouter = require('./routes/statisticsRouter');
 
 const dbURI = "mongodb+srv://admin:admin@cluster0.ldqpwa2.mongodb.net/?retryWrites=true&w=majority"
 
@@ -29,6 +30,7 @@ app.use(logInRouts);
 app.use(orderRouter);
 app.use(charityMovementsRouter);
 app.use(donorMovementsRouter);
+app.use(statisticsRouter);
 
 module.exports = {
   server: app,

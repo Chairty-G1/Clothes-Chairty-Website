@@ -19,11 +19,12 @@ const oneDonorMovement = async (req, res) => {
 
 const newDonorMovement = async (req, res) => {
 
-    const { destination, order_id, donor_id } = req.body;
+    const { destination, order_id, donor_id, email } = req.body;
 
     const currentDate = new Date();
     const newDonorMovements = new DonorMovements({
         status: false,
+        email: email,
         destination: destination,
         date: currentDate.toLocaleString(),
         order_id: order_id,
