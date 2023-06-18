@@ -36,7 +36,7 @@ const newCharity = async (req, res, next) => {
 
     const newCharity = new Charity({
         role: 'charity',
-        serial_number : serial_number,
+        serial_number: serial_number,
         username: username,
         email: email,
         password: hashedPwd,
@@ -53,11 +53,31 @@ const newCharity = async (req, res, next) => {
 const updateCharity = async (req, res) => {
     const userId = req.params.id;
     const updatedUserData = req.body;
-    updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10)
-    const user = await Charity.findByIdAndUpdate(userId, updatedUserData, { new: true });
-    const updatedUser = await user.save();
+  
+    const user = await Charity.findById(userId);
+  
+    if (!user || user.is_delete) {
+      return res.status(401).send('User not found');
+    }
+  
+    const passwordMatches = await bcrypt.compare(
+      updatedUserData.password,
+      user.password
+    );
+  
+    if (!passwordMatches) {
+      return res.status(401).send('Incorrect password');
+    }
+  
+    updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+  
+    const updatedUser = await Charity.findByIdAndUpdate(userId, updatedUserData, {
+      new: true,
+    });
+  
     res.json(updatedUser);
-};
+  };
+  
 
 const deleteCharity = async (req, res) => {
     try {

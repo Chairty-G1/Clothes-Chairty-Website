@@ -51,6 +51,14 @@ const newDonor = async (req, res, next) => {
 const updateDonor = async (req, res) => {
     const userId = req.params.id;
     const updatedUserData = req.body;
+
+    const userData = await Donor.findById(userId);
+
+    if (!(await bcrypt.compare(userData.password, updatedUserData.password)) || user.is_delete) {
+
+        return res.status(401).send("incorrect password");
+    }
+
     updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10)
     const user = await Donor.findByIdAndUpdate(userId, updatedUserData, { new: true });
     const updatedUser = await user.save();

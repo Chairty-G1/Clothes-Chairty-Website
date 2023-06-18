@@ -11,21 +11,27 @@ const allCharityMovement = (req, res) => {
         });
 };
 
-const oneCharityMovement = async (req, res) => {
+const allCharityMovementById = async (req, res) => {
     const id = req.params.id;
-    const move = await CharityMovements.find({ _id: id });
-    res.json(move);
+    const movement = await CharityMovements.find({ _id: id });
+    res.json(movement);
+};
+
+const allCharityMovementByEmail = async (req, res) => {
+    const { email } = req.body;
+    const movement = await CharityMovements.find({ email: email });
+    res.json(movement);
 };
 
 const newCharityMovement = async (req, res) => {
 
-    const { destination, order_id, charityId, email } = req.body;
+    const { order_id, charityId, email } = req.body;
 
     const currentDate = new Date();
     const newCharityMovements = new CharityMovements({
         status: false,
         email: email,
-        destination: destination,
+        destination: '',
         date: currentDate.toLocaleString(),
         order_id: order_id,
         charityId: charityId,
@@ -68,7 +74,8 @@ const deleteCharityMovement = async (req, res) => {
 
 module.exports = {
     allCharityMovement,
-    oneCharityMovement,
+    allCharityMovementById,
+    allCharityMovementByEmail,
     newCharityMovement,
     updateCharityMovement,
     deleteCharityMovement,

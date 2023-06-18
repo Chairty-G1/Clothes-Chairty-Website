@@ -51,6 +51,14 @@ const newAdmin = async (req, res, next) => {
 const updateAdmin = async (req, res) => {
     const userId = req.params.id;
     const updatedUserData = req.body;
+
+    const userData = await Admin.findById(userId);
+
+    if (!(await bcrypt.compare(userData.password, updatedUserData.password)) || user.is_delete) {
+
+        return res.status(401).send("incorrect password");
+    }
+
     updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10)
     const user = await Admin.findByIdAndUpdate(userId, updatedUserData, { new: true });
     const updatedUser = await user.save();

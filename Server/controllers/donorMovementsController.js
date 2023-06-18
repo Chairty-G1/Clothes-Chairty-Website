@@ -11,21 +11,27 @@ const allDonorMovement = (req, res) => {
         });
 };
 
-const oneDonorMovement = async (req, res) => {
+const allDonorMovementById = async (req, res) => {
     const id = req.params.id;
     const movement = await DonorMovements.find({ _id: id });
     res.json(movement);
 };
 
+const allDonorMovementByEmail = async (req, res) => {
+    const { email } = req.body;
+    const movement = await DonorMovements.find({ email: email });
+    res.json(movement);
+};
+
 const newDonorMovement = async (req, res) => {
 
-    const { destination, order_id, donor_id, email } = req.body;
+    const {  order_id, donor_id, email } = req.body;
 
     const currentDate = new Date();
     const newDonorMovements = new DonorMovements({
         status: false,
         email: email,
-        destination: destination,
+        destination: '',
         date: currentDate.toLocaleString(),
         order_id: order_id,
         donor_id: donor_id,
@@ -67,8 +73,9 @@ const deleteDonorMovement = async (req, res) => {
 
 module.exports = {
     allDonorMovement,
-    oneDonorMovement,
     newDonorMovement,
     updateDonorMovement,
     deleteDonorMovement,
+    allDonorMovementById,
+    allDonorMovementByEmail,
 }; 
