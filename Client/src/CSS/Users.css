@@ -18,12 +18,12 @@
   .password .eye {
     cursor: pointer;
     position: absolute;
-    right: 13px;
+    left: 13px;
     top: 33px;
   }
   
   .password .eye {
-    right: 25px;
+    left: 25px;
     top: 34px;
   }
   

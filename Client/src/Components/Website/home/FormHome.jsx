@@ -168,7 +168,7 @@ const FormHome = () => {
               <input
                 type="text"
                 id="full-name"
-                className={`bg-white border border-[#059669] text-gray-900 text-sm rounded-lg focus:ring-[#059669] focus:border-[#059669] block w-full p-2.5  placeholder-black  shadow-sm-light ${
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none${
                   errors.name ? "border-red-500" : ""
                 }`}
                 placeholder="الإسم بالكامل"
@@ -186,7 +186,7 @@ const FormHome = () => {
               <input
                 type="email"
                 id="contact_subject"
-                className={`block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-[#059669] shadow-sm focus:ring-[#059669] focus:border-[#059669]   placeholder-black  ${
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
                   errors.email ? "border-red-500" : ""
                 }`}
                 placeholder="البريد الإلكتروني"
@@ -203,7 +203,7 @@ const FormHome = () => {
             <input
               type="text"
               id="mobile"
-              className={`block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-[#059669] shadow-sm focus:ring-[#059669] focus:border-[#059669]   placeholder-black  ${
+              className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
                 errors.phone ? "border-red-500" : ""
               }`}
               placeholder="رقم الهاتف"
@@ -221,7 +221,7 @@ const FormHome = () => {
               <input
                 type="text"
                 id="address"
-                className={`block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-[#059669] shadow-sm focus:ring-[#059669] focus:border-[#059669]   placeholder-black  ${
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
                   errors.address ? "border-red-500" : ""
                 }`}
                 placeholder="العنوان"
@@ -241,7 +241,7 @@ const FormHome = () => {
                 id="status"
                 label="status"
                 dir="rtl"
-                className={`block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-[#059669] shadow-sm focus:ring-[#059669] focus:border-[#059669]   placeholder-black  ${
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
                   errors.order_status ? "border-red-500" : ""
                 }`}
               >
@@ -262,7 +262,7 @@ const FormHome = () => {
                 id="type"
                 label="type"
                 dir="rtl"
-                className={`block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-[#059669] shadow-sm focus:ring-[#059669] focus:border-[#059669]   placeholder-black  ${
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
                   errors.type ? "border-red-500" : ""
                 }`}
               >
@@ -283,7 +283,7 @@ const FormHome = () => {
               <input
                 type="number"
                 id="numbers"
-                className={`block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-[#059669] shadow-sm focus:ring-[#059669] focus:border-[#059669]   placeholder-black  ${
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
                   errors.number_pieces ? "border-red-500" : ""
                 }`}
                 placeholder="عدد القطع"
@@ -301,7 +301,7 @@ const FormHome = () => {
               <textarea
                 id="details"
                 rows="6"
-                className={`text-right block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-[#059669] focus:ring-[#059669] focus:border-[#059669]   placeholder-black  ${
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
                   errors.description ? "border-red-500" : ""
                 }`}
                 placeholder="تفاصيل إضافية"
@@ -311,9 +311,9 @@ const FormHome = () => {
             </div>
             <button
               type="submit"
-              className="py-3 lg:w-full px-5 text-sm font-medium text-center text-white bg-[#388175] hover: rounded-lg hover:bg-[#1b423b] sm:w-fit  border-2 border-[#388175] focus:ring-4 focus:outline-none focus:ring-[#4f7a87]"
+              className="py-3 lg:w-full px-5 text-sm font-medium text-center text-white bg-teal-600 transition hover:bg-teal-700 rounded-lg sm:w-fit  border-2 border-[#388175]"
             >
-              إنشاء طلب
+              ارسال تبرع
             </button>
           </form>
         </div>

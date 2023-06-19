@@ -55,8 +55,6 @@ export default function Idea() {
             className="main-bk-green"
           ></path>
         </svg>
-
-
       </div>
       <div className="container my-24 mx-auto px-4 md:px-6">
         <div className="container lg:max-w-screen-xl mx-auto px-5 ">

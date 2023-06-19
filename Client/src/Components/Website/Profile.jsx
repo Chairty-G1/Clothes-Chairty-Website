@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import { FiEdit } from "react-icons/fi";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Loader from './Loader';
 
 function Profile() {
@@ -14,6 +14,13 @@ function Profile() {
   const [edit, setEdit] = useState("hidden");
   const [massage, setMassage] = useState();
   const [userLog, setUserLog] = useState();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.search === "?log")
+      setChoise('السجل')
+  }, []);
 
   async function verifyToken() {
     const token = localStorage.getItem("token") || false;
@@ -117,33 +124,9 @@ function Profile() {
             setChoise("الصفحة الشخصية");
           }}
           className="flex items-center p-2 text-white rounded-md bg-teal-600 transition hover:bg-teal-700 ml-3">
-          <span className="flex-1 mr-3 whitespace-nowrap">
-            صفحتي الشخصية
+          <span className="flex-1 whitespace-nowrap">
+            الملف الشخصي
           </span>
-          <svg
-            viewBox="0 0 512 512"
-            width="30"
-            xmlns="http://www.w3.org/2000/svg"
-            className="fill-current text-gray-800"
-          >
-            <path
-              d="M369.5 135.9c0 67.1-50.8 161.3-113.5 161.3S142.5 203 142.5 135.9 193.3 14.3 256 14.3s113.5 54.4 113.5 121.6z"
-              fill="#fff"
-              stroke="#2c3e50"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-miterlimit="10"
-            ></path>
-            <path
-              d="M464.1 365.8c-19-18-131.7-51.2-131.7-51.2l-76.3 85.3h0l-76.3-85.3S67.1 347.8 48.1 365.8c-29.3 27.7-31.6 132-31.6 132h479.2c-.1-.1-2.3-104.3-31.6-132z"
-              fill="#0d9488"
-              stroke="#fff"
-              stroke-width="20"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-miterlimit="10"
-            ></path>
-          </svg>
         </button>
       </div>
 
@@ -152,7 +135,7 @@ function Profile() {
           {choise === "الصفحة الشخصية" && (
             <>
               <h1 className="flex justify-center text-2xl md:text-3xl pl-2 my-10 text-black mt-10 font-bold">
-                صفحتي الشخصية
+                الملف الشخصي
               </h1>
               <div className="max-w-screen-xl mx-auto px-4 md:px-8">
                 <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
@@ -182,11 +165,7 @@ function Profile() {
               </div>
               <main className={`w-full mt-10 ${edit} flex-col items-center justify-center px-4`}>
 
-                <button type="button" onClick={() => setEdit("hidden")} className="bg-teal-600 rounded-md p-2 inline-flex items-center justify-center text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-inset">
-                  <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+
 
                 <h1 className="flex justify-center text-2xl md:text-3xl pl-2 mb-10 text-black mt-10 font-bold">
                   تعديل البيانات
@@ -223,6 +202,10 @@ function Profile() {
                     >
                       حفظ التعديلات
                     </button>
+
+                    <button type="button" onClick={() => setEdit("hidden")} className="w-full flex justify-center px-4 py-2 text-white font-medium rounded-md bg-teal-600 transition hover:bg-teal-700">
+                      إلغاء
+                    </button>
                     <p className={`mt-2 text-sm text-red-600 dark:text-red-500`}><span className="font-medium">{massage}</span></p>
                   </form>
                 </div>
@@ -243,7 +226,7 @@ function Profile() {
                       <tr>
                         <th className="py-3 px-6">حالة التبرع</th>
                         <th className="py-3 px-6">التاريخ</th>
-                        <th className="py-3 px-6">الجهة التي تلقت الطلب</th>
+                        <th className="py-3 px-6">{user[0].role === 'donor' ? 'الجهة التي تلقت الطلب' : "صاحب الطلب"}</th>
                         <th className="py-3 px-6">رقم المعرف للطلب</th>
                         <th className="py-3 px-6">عرض الطلب</th>
                       </tr>
@@ -254,14 +237,14 @@ function Profile() {
                           <>
                             <tr>
                               <td className="px-6 py-4 whitespace-nowrap">
-                                <span className={`bg-${movement.status ? 'green' : 'red'}-100 text-${movement.status ? 'green' : 'red'}-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-${movement.status ? 'green' : 'red'}-400 border border-${movement.status ? 'green' : 'red'}-400`}>{movement.status ? 'مسلم' : "غير مسلم"}</span>
+                                <span className={`bg-${movement.status ? 'green' : 'red'}-100 text-${movement.status ? 'green' : 'red'}-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-${movement.status ? 'green' : 'red'}-400 border border-${movement.status ? 'green' : 'red'}-400`}>{user[0].role === 'donor' ? (movement.status ? 'مستلم' : "غير مستلم") : (movement.status ? 'مقبول' : "غير مقبول")}</span>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap">{movement.date}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{movement.destination === '' ? 'لا يوجد' : movement.destination} </td>
                               <td className="px-6 py-4 whitespace-nowrap">{movement.order_id}</td>
                               <td className="px-6 py-4 whitespace-nowrap">
 
-                                <Link to={`/donations_details/${movement.order_id}`} className="flex items-center p-3 text-white rounded-md bg-teal-600 transition hover:bg-teal-700">
+                                <Link to={{ pathname: `/donations_details/${movement.order_id}`, search: "profile" }} className="flex items-center p-3 text-white rounded-md bg-teal-600 transition hover:bg-teal-700">
                                   <span className="flex-1 mr-5 whitespace-nowrap ">عرض</span>
                                   <svg viewBox="0 0 576 512" fill='currentColor' width={20} xmlns="http://www.w3.org/2000/svg"><path d="M572.6 270.3l-96 192C471.2 473.2 460.1 480 447.1 480H64c-35.35 0-64-28.66-64-64V96c0-35.34 28.65-64 64-64h117.5c16.97 0 33.25 6.742 45.26 18.75L275.9 96H416c35.35 0 64 28.66 64 64v32h-48V160c0-8.824-7.178-16-16-16H256L192.8 84.69C189.8 81.66 185.8 80 181.5 80H64C55.18 80 48 87.18 48 96v288l71.16-142.3C124.6 230.8 135.7 224 147.8 224h396.2C567.7 224 583.2 249 572.6 270.3z" /></svg>
                                 </Link>

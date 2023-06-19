@@ -36,7 +36,7 @@ const Donations = () => {
   }, []);
 
   const [selectedType, setSelectedType] = useState("");
-  const [search, setSearch] = useState("");
+  const [selectedStatus, setselectedStatus] = useState("");
   const [maxPieces, setMaxPieces] = useState("");
   const [minPieces, setMinPieces] = useState("");
   const { data, loading, error } = useFetch("http://localhost:8000/all_order");
@@ -51,6 +51,9 @@ const Donations = () => {
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
   };
+  const handleStatusChange = (event) => {
+    setselectedStatus(event.target.value);
+  };
 
   const handlemaxPiecesChange = (event) => {
     setMaxPieces(Number(event.target.value));
@@ -62,9 +65,10 @@ const Donations = () => {
     if (selectedType && donation.type !== selectedType) {
       return false;
     }
-    if (search && !donation.name.toLowerCase().includes(search.toLowerCase())) {
+    if (selectedStatus && donation.order_status !== selectedStatus) {
       return false;
     }
+
     if (maxPieces && donation.number_pieces > maxPieces) {
       return false;
     }
@@ -93,31 +97,14 @@ const Donations = () => {
 
       {/* Filter */}
       <section className="py-2">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <div className="flex justify-center mb-4">
-                <div className="relative w-1/2">
-                  <input
-                    className="rounded-lg border border-transparent shadow-md w-full py-2 px-4 bg-gray-200 focus:outline-teal-700 focus:shadow-outline"
-                    type="text"
-                    placeholder="بحث"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <span className="absolute top-1/2 right-2 transform -translate-y-1/2">
-                    <i className="ri-search-line"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-
+        <div className="container mx-auto p-4">
+          <div className="row shadow-lg w-full">
             <div className="col-lg-6">
               <div className="flex items-center gap-3 mb-5 flex-wrap justify-center flex-col sm:flex-row">
                 <select
                   onChange={handleTypeChange}
                   value={selectedType}
-                  className="select__group mb-3 sm:mb-0"
+                  className="select__group mb-3 sm:mb-0 border-2 border-gray-300 focus:outline-teal-700 focus:shadow-outline rounded"
                 >
                   <option value="">النوع</option>
                   {[
@@ -125,6 +112,23 @@ const Donations = () => {
                   ].map((type) => (
                     <option key={type} value={type}>
                       {type}
+                    </option>
+                  ))}
+                </select>
+                {/* ************* */}
+                <select
+                  onChange={handleStatusChange}
+                  value={selectedStatus}
+                  className="select__group mb-3 sm:mb-0 border-2 border-gray-300 focus:outline-teal-700 focus:shadow-outline rounded"
+                >
+                  <option value="">حالة التبرع</option>
+                  {[
+                    ...new Set(
+                      filteredDonations?.map((item) => item.order_status)
+                    ),
+                  ].map((order_status) => (
+                    <option key={order_status} value={order_status}>
+                      {order_status}
                     </option>
                   ))}
                 </select>
@@ -166,26 +170,31 @@ const Donations = () => {
           {filteredDonations?.map((item, index) => (
             <div
               key={index}
-              className="border-2 border-teal-100 flex flex-wrap md:flex-nowrap shadow-lg mx-auto mt-4 w-full md:w-84 hover:scale-95 transition-transform duration-300"
+              className="border-2 border-teal-100 rounded-lg flex flex-wrap md:flex-nowrap shadow-lg mx-auto mt-4 w-full md:w-84 hover:scale-95 transition-transform duration-300"
             >
-              <img className="w-40 h-40 p-4" src={boxImage} alt="" />
-              <div className="p-10 my-auto text-right">
-                <h1 className="text-2xl font-semibold text-gray-800">
-                  {item.name}
-                </h1>
-                <p className="text-base text-gray-600 mt-2">
-                  {item.description}
-                </p>
-                <p className="text-base text-gray-600 mt-2 mb-3">
-                  {item.order_status}
-                </p>
-                <span>قطعة {item.number_pieces} </span>
-                <Link
-                  to={`/donations_details/${item._id}`}
-                  className="mt-4 rounded-md bg-white border-2 border-teal-700 px-4 py-2.5 text-sm font-medium text-teal-700 hover:text-white transition hover:bg-teal-700 flex justify-center"
-                >
-                  عرض
-                </Link>
+              <div className="card" style={{ width: "100%", height: "80%" }}>
+                <div className="flex justify-center items-center mt-2">
+                  <img className="w-40 h-40" src={boxImage} alt="" />
+                </div>
+                <div className="p-2 my-auto text-right">
+                  <p className="text-base text-gray-600 mt-2 mb-3 overflow-hidden">
+                    حالة التبرع : {item.order_status}
+                  </p>
+                  <p
+                    className="text-base text-gray-600 mt-2 overflow-hidden mb-2"
+                    style={{ wordWrap: "break-word" }}
+                  >
+                    الوصف : {item.description}{" "}
+                  </p>
+
+                  <span> عدد القطع : {item.number_pieces} </span>
+                  <Link
+                    to={{ pathname: `/donations_details/${item._id}`, search: "charity" }}
+                    className="mt-4 rounded-md bg-white border-2 border-teal-700 px-4 py-2.5 text-sm font-medium text-teal-700 hover:text-white transition hover:bg-teal-700 flex justify-center"
+                  >
+                    عرض
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
