@@ -7,7 +7,6 @@ const charitiesMovementsSchema = new mongoose.Schema({
   },
   destination: {
     type: String,
-    required: true,
   },
   date: {
     type: String,

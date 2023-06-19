@@ -53,21 +53,17 @@ const DonationsDetails = ({ }) => {
     const userVerifyToken = await verifyToken();
 
     const user = await getUser(userVerifyToken.userId);
-
     const firstUser = user[0];
+
+    
     try {
       const response = await axios.post(
         "http://localhost:8000/charity_movement",
         {
           email: firstUser.email, // Use the email property from the firstUser object
-          destination: firstUser.username,
+          destination: data[0].name,
           order_id: donationId,
-          donor_id: user.charity_id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          charity_id: firstUser._id,
         }
       );
 

@@ -224,7 +224,7 @@ export default function AboutUs() {
                 <div className="mb-12 lg:mb-0" style={{height: '150px'}}>
                   <img
                     className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
-                    src=""
+                    src="https://cdn.discordapp.com/attachments/1082309541145890927/1120248013957374033/WhatsApp_Image_2023-05-27_at_4.25.41_AM_1.jpeg"
                     alt="avatar" style={{height: '100%'}}
                   />
                   <h5 className="mb-4 text-lg font-bold">وسام احمد</h5>

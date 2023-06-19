@@ -54,7 +54,7 @@ const updateAdmin = async (req, res) => {
 
     const userData = await Admin.findById(userId);
 
-    if (!(await bcrypt.compare(userData.password, updatedUserData.password)) || user.is_delete) {
+    if (!(await bcrypt.compare(userData.password, updatedUserData.password)) || updatedUserData.is_delete) {
 
         return res.status(401).send("incorrect password");
     }

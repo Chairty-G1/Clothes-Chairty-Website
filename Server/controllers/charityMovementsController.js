@@ -11,6 +11,17 @@ const allCharityMovement = (req, res) => {
         });
 };
 
+const isMovementExisting = async (req, res) => {
+    const { email, order_id } = req.body;
+
+    const movement = await CharityMovements.find({ email: email, order_id: order_id  });
+
+    if (movement.length > 0)
+        res.json({ massage: "movement already exists", status: false});
+    else
+        res.json({ massage: "movement not exists", status: true});
+};
+
 const allCharityMovementById = async (req, res) => {
     const id = req.params.id;
     const movement = await CharityMovements.find({ _id: id });
@@ -25,16 +36,17 @@ const allCharityMovementByEmail = async (req, res) => {
 
 const newCharityMovement = async (req, res) => {
 
-    const { order_id, charityId, email } = req.body;
+    const { order_id, charity_id, email, destination } = req.body;
 
     const currentDate = new Date();
+
     const newCharityMovements = new CharityMovements({
         status: false,
         email: email,
-        destination: '',
+        destination: destination,
         date: currentDate.toLocaleString(),
         order_id: order_id,
-        charityId: charityId,
+        charity_id: charity_id,
     });
 
     const movement = await newCharityMovements.save();
@@ -79,4 +91,5 @@ module.exports = {
     newCharityMovement,
     updateCharityMovement,
     deleteCharityMovement,
+    isMovementExisting,
 }; 

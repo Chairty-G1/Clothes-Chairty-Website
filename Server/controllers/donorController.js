@@ -54,7 +54,11 @@ const updateDonor = async (req, res) => {
 
     const userData = await Donor.findById(userId);
 
-    if (!(await bcrypt.compare(userData.password, updatedUserData.password)) || user.is_delete) {
+    if (!updatedUserData || updatedUserData.is_delete) {
+        return res.status(401).send('User not found');
+    }
+
+    if (!(await bcrypt.compare(userData.password, updatedUserData.password))) {
 
         return res.status(401).send("incorrect password");
     }
@@ -85,7 +89,6 @@ const deleteDonor = async (req, res) => {
         res.status(500).json({ error: 'Failed to update Donor' });
     }
 };
-
 
 module.exports = {
     allDonors,

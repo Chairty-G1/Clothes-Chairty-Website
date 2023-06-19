@@ -6,6 +6,7 @@ import Loader from "../Website/Loader";
 import heroBg from "../../Images/donate.jpg";
 import boxImage from "../../Images/box.png";
 import useFetch from "../../CustomHooks/UseFetch";
+import NotFound from "./NotFound";
 
 const Donations = () => {
   const navigate = useNavigate();
@@ -44,8 +45,7 @@ const Donations = () => {
     return <Loader />;
   }
   if (error) {
-    {console.log(error)}
-    return <div>not found</div>;
+    return <NotFound />;
   }
 
   const handleTypeChange = (event) => {
@@ -95,7 +95,7 @@ const Donations = () => {
       <section className="py-2">
         <div className="container">
           <div className="row">
-            <div className="col-3">
+            <div className="col-12">
               <div className="flex justify-center mb-4">
                 <div className="relative w-1/2">
                   <input
@@ -113,11 +113,11 @@ const Donations = () => {
             </div>
 
             <div className="col-lg-6">
-              <div className="flex items-center gap-3 mb-5 flex-wrap justify-center">
+              <div className="flex items-center gap-3 mb-5 flex-wrap justify-center flex-col sm:flex-row">
                 <select
                   onChange={handleTypeChange}
                   value={selectedType}
-                  className="select__group "
+                  className="select__group mb-3 sm:mb-0"
                 >
                   <option value="">النوع</option>
                   {[
@@ -128,7 +128,7 @@ const Donations = () => {
                     </option>
                   ))}
                 </select>
-                <div className="d-flex align-items-center">
+                <div className="flex items-center">
                   <input
                     placeholder="أقل عدد قطع"
                     name="Max"
@@ -136,10 +136,10 @@ const Donations = () => {
                     min="0"
                     value={minPieces}
                     onChange={handleminPiecesChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-teal-700  leading-tight focus:outline-teal-700 focus:shadow-outline"
+                    className="shadow appearance-none border rounded w-40 py-2 px-3 text-teal-700 leading-tight focus:outline-teal-700 focus:shadow-outline"
                   />
                 </div>
-                <div className="d-flex align-items-center">
+                <div className="flex items-center">
                   <input
                     placeholder="أكثر عدد قطع"
                     name="Min"
@@ -147,7 +147,7 @@ const Donations = () => {
                     min={minPieces}
                     value={maxPieces}
                     onChange={handlemaxPiecesChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-teal-700  leading-tight focus:outline-teal-700 focus:shadow-outline"
+                    className="shadow appearance-none border rounded w-40 py-2 px-3 text-teal-700 leading-tight focus:outline-teal-700 focus:shadow-outline"
                   />
                 </div>
               </div>
