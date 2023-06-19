@@ -92,6 +92,31 @@ const Donations = () => {
           backgroundAttachment: "fixed",
         }}
       >
+                <svg
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMax meet"
+          viewBox="0 0 283.5 19.6"
+        >
+          <path
+            d="M0 0v18.8L141.8 4.1l141.7 14.7V0z"
+            className="main-bk-green"
+            opacity="0.33"
+          ></path>
+          <path
+            d="M0 0v12.6L141.8 4l141.7 8.6V0z"
+            className="main-bk-green"
+            opacity="0.33"
+          ></path>
+          <path
+            d="M0 0v6.4L141.8 4l141.7 2.4V0z"
+            className="main-bk-green"
+            opacity="0.33"
+          ></path>
+          <path
+            d="M0 0v1.2L141.8 4l141.7-2.8V0z"
+            className="main-bk-green"
+          ></path>
+        </svg>
         <div className="absolute inset-0 overflow-hidden bg-gray-600 opacity-60"></div>
       </div>
 
