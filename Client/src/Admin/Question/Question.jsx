@@ -1,14 +1,11 @@
-/* eslint-disable react/prop-types */
+import { QuestionCard } from "./QuestionCard";
+import { Nav } from "../Nav";
+import { Aside } from "../Aside";
+import { useEffect } from "react";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
-import { useEffect} from 'react';
-import {useNavigate }from 'react-router-dom'
-import axios from 'axios';
-import "flowbite";
-import { Nav } from "./Nav";
-import { Aside } from "./Aside";
-import { Main } from "./Main Page/Main";
-
-export const DashBoard = (props) => {
+export const Question = () => {
   const navigate = useNavigate();
 
   const verifyToken= async (role) => {
@@ -41,12 +38,15 @@ export const DashBoard = (props) => {
   }, []);
 
   return (
-    <>
-      <div className="antialiased" dir="rtl">
-        <Nav />
-        <Main />
-        <Aside forceUpdate={props.forceUpdate}/>
-      </div>
-    </>
+    <div dir="rtl">
+    <Nav/>
+      <main className="p-4 px-8  md:mr-64 h-auto pt-20 mt-8">
+       
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 mb-4">
+          <QuestionCard/>
+        </div>
+      </main>
+      <Aside/>
+    </div>
   );
 };

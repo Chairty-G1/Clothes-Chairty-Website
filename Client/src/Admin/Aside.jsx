@@ -20,7 +20,14 @@ export const Aside = (props) => {
   const [hotels, setHotels] = useState([]);
   const [reducer, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  function handleLogOut() {
+  function handleLogOut() {      
+    window.scrollTo(0, 0);
+    
+    var Nav = document.getElementById("Nav");
+    Nav.style.display = "block";
+    var Footer = document.getElementById("Footer");
+    Footer.style.display = "block";
+
     localStorage.removeItem("token");
     props.forceUpdate()
   }
@@ -40,12 +47,13 @@ export const Aside = (props) => {
   const count = hotels.length;
 
   return (
-    <aside
+    // <aside
 
-      className="fixed right-0 top-0  z-50 w-64  h-screen pt-[62px] pb-1 transition-transform translate-x-full  md:translate-x-0"
-      aria-label="Sidenav"
-      id="drawer-navigation"
-    >
+    //   className="fixed top-0  z-50 w-64  h-screen pt-[62px] pb-1 transition-transform translate-x-full  md:translate-x-0"
+    //   aria-label="Sidenav"
+    //   id="drawer-navigation"
+    // >
+    <aside className="fixed top-0 z-50 w-64  h-screen pt-[62px] pb-1 transition-transform translate-x-full  md:translate-x-0">
       <div className="overflow-y-auto py-5 px-3 h-full bg-teal-600 ">
         <ul className="space-y-2">
           <li>
@@ -91,6 +99,15 @@ export const Aside = (props) => {
             >
               <AiFillMessage />
               الرسائل
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/question"
+              className="flex     items-center gap-2 p-2  w-full text-base font-medium text-white  rounded-lg transition duration-75 group hover:bg-[#fff] hover:text-[#0d9488] "
+            >
+              <AiFillMessage />
+              الاسئلة الشائعة
             </Link>
           </li>
           <li>

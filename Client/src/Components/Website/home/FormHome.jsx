@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-// import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import Loader from "../Loader";
 
 const FormHome = () => {
   const formRef = useRef(null);
   const [errors, setErrors] = useState({});
+  const [userData, setUserData] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token") || false)
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   async function verifyToken() {
-    const token = localStorage.getItem("token") || false;
 
     if (token) {
       try {
@@ -22,6 +28,20 @@ const FormHome = () => {
       }
     }
   }
+  async function getUserByID(id) {
+    try {
+      const res = await axios.get(`http://localhost:8000/donor/${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getUserData = async () => {
+    const userToken = await verifyToken();
+    const user = await getUserByID(userToken.userId);
+    setUserData(user[0]);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,17 +72,16 @@ const FormHome = () => {
         const order_id = res.data._id;
         const email = res.data.email;
         const user = await verifyToken();
-
         let newMove = {
           order_id: order_id,
           email: email,
-          donor_id: ''
+          donor_id: "",
         };
 
-        if (!user?.donor_id) {
-          delete newMove.donor_id
+        if (!user?.userId) {
+          delete newMove.donor_id;
         } else {
-          newMove = {...newMove, donor_id: user.userId}
+          newMove = { ...newMove, donor_id: user.userId };
         }
 
         try {
@@ -70,10 +89,19 @@ const FormHome = () => {
             "http://localhost:8000/donor_movement",
             newMove
           );
+          console.log(newMove);
+          // console.log('Sent data successfully to donor_movement');
         } catch (error) {
           console.log("Error sending data to donor_movement", error);
         }
         formRef.current.reset();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "شكراً لتبرعكم",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } catch (error) {
         console.log("Error sending form from react:", error);
       }
@@ -146,6 +174,12 @@ const FormHome = () => {
     return /^\d+$/.test(number) && number >= 0 && number <= 100;
   };
 
+  if (!userData && token) {
+    return (
+      <Loader />
+    )
+  }
+
   return (
     <>
       <div className="block">
@@ -165,52 +199,57 @@ const FormHome = () => {
                   {errors.name}
                 </p>
               )}
+
               <input
                 type="text"
                 id="full-name"
-                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none${
-                  errors.name ? "border-red-500" : ""
-                }`}
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none ${errors.email ? "border-red-500" : ""
+                  } ${userData?.username ? "hidden" : ""}`}
                 placeholder="الإسم بالكامل"
                 name="full-name"
+                value={userData?.username}
                 required
-                style={{ direction: "rtl" }}
+                style={{ direction: "rtl", opacity: 1 }}
               />
             </div>
+
             <div>
               {errors.email && (
                 <p className="text-red-500 text-xs mt-1 text-right">
                   {errors.email}
                 </p>
               )}
+
               <input
                 type="email"
-                id="contact_subject"
-                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
-                  errors.email ? "border-red-500" : ""
-                }`}
+                id="email"
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none ${errors.email ? "border-red-500" : ""
+                  } ${userData?.email ? "hidden" : ""}`}
                 placeholder="البريد الإلكتروني"
                 name="email"
+                value={userData?.email}
                 required
-                style={{ direction: "rtl" }}
+                style={{ direction: "rtl", opacity: 1 }}
               />
             </div>
-            {errors.phone && (
-              <p className="text-red-500 text-xs mt-1 text-right ">
-                {errors.phone}
-              </p>
-            )}
-            <input
-              type="text"
-              id="mobile"
-              className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
-                errors.phone ? "border-red-500" : ""
-              }`}
-              placeholder="رقم الهاتف"
-              name="mobile"
-              required
-              style={{ direction: "rtl" }}
-            />
+            <div>
+              {errors.phone && (
+                <p className="text-red-500 text-xs mt-1 text-right">
+                  {errors.phone}
+                </p>
+              )}
+              <input
+                type="text"
+                id="mobile"
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none ${errors.phone ? "border-red-500" : ""
+                  } ${userData?.phone ? "hidden" : ""}`}
+                placeholder="رقم الهاتف"
+                name="mobile"
+                value={userData?.phone}
+                required
+                style={{ direction: "rtl", opacity: 1 }}
+              />
+            </div>
 
             <div>
               {errors.address && (
@@ -221,9 +260,8 @@ const FormHome = () => {
               <input
                 type="text"
                 id="address"
-                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
-                  errors.address ? "border-red-500" : ""
-                }`}
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${errors.address ? "border-red-500" : ""
+                  }`}
                 placeholder="العنوان"
                 name="address"
                 required
@@ -241,9 +279,8 @@ const FormHome = () => {
                 id="status"
                 label="status"
                 dir="rtl"
-                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
-                  errors.order_status ? "border-red-500" : ""
-                }`}
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${errors.order_status ? "border-red-500" : ""
+                  }`}
               >
                 <option>حالة التبرع</option>
                 <option>جديد</option>
@@ -262,9 +299,8 @@ const FormHome = () => {
                 id="type"
                 label="type"
                 dir="rtl"
-                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
-                  errors.type ? "border-red-500" : ""
-                }`}
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${errors.type ? "border-red-500" : ""
+                  }`}
               >
                 <option>نوع التبرع</option>
                 <option>رجالي</option>
@@ -283,9 +319,8 @@ const FormHome = () => {
               <input
                 type="number"
                 id="numbers"
-                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
-                  errors.number_pieces ? "border-red-500" : ""
-                }`}
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${errors.number_pieces ? "border-red-500" : ""
+                  }`}
                 placeholder="عدد القطع"
                 name="numbers"
                 required
@@ -301,9 +336,8 @@ const FormHome = () => {
               <textarea
                 id="details"
                 rows="6"
-                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${
-                  errors.description ? "border-red-500" : ""
-                }`}
+                className={`rounded-lg form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-teal-600 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-teal-800 focus:outline-none  ${errors.description ? "border-red-500" : ""
+                  }`}
                 placeholder="تفاصيل إضافية"
                 name="details"
                 style={{ direction: "rtl" }}

@@ -47,7 +47,7 @@ export const Nav = () => {
             className="flex items-center justify-between mr-4"
           >
             {/* <img > */}
-            <span className="flex items-center  justify-center  w-14 h-10  text-2xl font-semibold whitespace-nowrap text-teal-600">
+            <span className="flex items-center  justify-center  w-24 h-10  text-2xl font-semibold whitespace-nowrap text-teal-600">
               <img src={logo} alt="logo"/>
             </span>
             <span className="text-[20px] font-bold">وشاح الأمل</span>

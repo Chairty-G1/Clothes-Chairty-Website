@@ -1,11 +1,14 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
+import { AiOutlineDelete } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 export const TableOfDonations = () => {
   const [donations, setDonations] = useState([]);
- 
-  
+  const [reducer, forceUpdate] = useReducer((x) => x + 1, 0);
+
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/dashboard/activeDonations")
@@ -17,8 +20,32 @@ export const TableOfDonations = () => {
       });
   }, []);
 
- 
-  
+  const handleDelete = (id, name) => {
+    Swal.fire({
+      title: `  ${name}  هل تريد حذف طلب `,
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "نعم",
+      cancelButtonText: "لا",
+      icon: "warning",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire(` ${name} لقد تم الحذف بنجاح `, "", "success");
+
+        axios
+          .put("http://localhost:8000/dashboard/deleteDonation/" + id)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .then(() => {
+            forceUpdate();
+          })
+          .catch((error) => console.log(error.message));
+      } else Swal.fire(" تم إلغاء العملية", "", "error");
+    });
+  };
+
   const tableRows = donations.map((donation) => {
     return (
       <tr key={donation._id} className="border-b ">
@@ -35,8 +62,25 @@ export const TableOfDonations = () => {
         <td className="px-4 py-3">{donation.number_pieces}</td>
         <td className="px-4 py-3">{donation.type}</td>
         <td className="px-4 py-3">{donation.description}</td>
-
-       
+        <td className="px-0 py-0">
+          <div className="w-44">
+            <span className={`bg-${!donation.available ? 'green' : 'red'}-100 text-${!donation.available ? 'green' : 'red'}-800   px-2 py-0.5 rounded dark:bg-gray-700 dark:text-${!donation.available ? 'green' : 'red'}-400 border border-${!donation.available ? 'green' : 'red'}-400`}>{!donation.available ? 'مستلم' : "غير مستلم"}</span>
+          </div>
+        </td>
+        <td className="px-4 py-3 flex items-center justify-end">
+        <div
+            className="bg-white  rounded divide-y divide-gray-100 shadow "
+          >
+            <div className="tooltip tooltip-error text-white" data-tip="حذف">
+              <button
+                onClick={() => handleDelete(donation._id, donation.name)}
+                className="btn bg-white hover:bg-red-200 shadow-lg hover:shadow-xl border-none "
+              >
+                <AiOutlineDelete className="text-red-500 text-[15px]" />
+              </button>
+            </div>
+          </div>
+        </td>
       </tr>
     );
   });
@@ -74,6 +118,12 @@ export const TableOfDonations = () => {
                   </th>
                   <th scope="col" className="px-4 py-3">
                     وصف
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    حالة التبرع
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    
                   </th>
                 </tr>
               </thead>

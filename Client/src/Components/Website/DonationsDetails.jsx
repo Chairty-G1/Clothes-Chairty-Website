@@ -149,6 +149,10 @@ const DonationsDetails = ({}) => {
               <span className="text-gray-600">{donation.order_status}</span>
             </p>
             <p className="text-base text-gray-800 mb-2">
+              النوع :{" "}
+              <span className="text-gray-600">{donation.type}</span>
+            </p>
+            <p className="text-base text-gray-800 mb-2">
               عدد القطع :{" "}
               <span className="text-gray-600">{donation.number_pieces} </span>
             </p>

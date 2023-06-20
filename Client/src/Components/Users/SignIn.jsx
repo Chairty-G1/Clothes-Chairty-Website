@@ -157,7 +157,7 @@ export default function SignIn({ updateIsLog }) {
         });
 
         localStorage.setItem("token", res.data.Token);
-        navigate("/dashbaord");
+        navigate("/dashboard");
         console.log(res);
 
       } catch (err) {
@@ -185,7 +185,7 @@ export default function SignIn({ updateIsLog }) {
         <h1 class="text-2xl xl:text-3xl font-extrabold text-teal-600 text-center">
               تسجيل الدخول لحسابك
             </h1>
-          <div className="flex flex-wrap mt-4 items-center justify-around border border-primary border-opacity-50 rounded-3">
+          <div className="flex flex-wrap mt-4 items-center justify-around border-2 border-teal-600 border-opacity-50 rounded-lg">
             <div className="my-3">
               <label htmlFor="donor" className="me-3 text-sm font-medium">
                 متبرع

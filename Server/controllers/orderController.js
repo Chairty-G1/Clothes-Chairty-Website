@@ -2,7 +2,7 @@ const Order = require("../models/orderModel");
 const errorHandler = require("../middleware/500");
 
 const allOrders = (req, res) => {
-    Order.find({ is_delete: false, active: true })
+    Order.find({ is_delete: false, active: true, available : true })
         .then((data) => {
             res.json(data);
         })

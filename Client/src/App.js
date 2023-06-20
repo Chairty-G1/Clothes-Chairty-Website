@@ -20,6 +20,7 @@ import { Donors } from './Admin/Donors Page/Donors';
 import { Beneficiaries } from './Admin/Beneficiaries Page/Beneficiaries';
 import { DonationsAdmin } from './Admin/Donations Page/Donations';
 import { Message } from './Admin/messages/Message';
+import { Question } from './Admin/Question/Question';
 import { Requests } from './Admin/Requests Page/Requests';
 import { DonationRequest } from './Admin/Donation requests/DonationRequests';
 import { AssociationRequests } from './Admin/Association requests/AssociationRequests';
@@ -55,6 +56,7 @@ function App() {
         <Route path="/donation" element={<DonationsAdmin />} />
         <Route path="/requests" element={<Requests />} />
         <Route path="/message" element={<Message />} />
+        <Route path="/question" element={<Question />} />
         <Route path="/donationRequest" element={<DonationRequest />} />
         <Route path="/orgrequest" element={<AssociationRequests />} />
         

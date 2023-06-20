@@ -7,6 +7,7 @@ const Order = require("../models/orderModel");
 const CharityMovements = require("../models/charityMovementsModel");
 const DonorMovements = require("../models/donorMovementsModel");
 const Messages = require("../models/massageDataModel");
+const Questions = require("../models/questionsDataModel");
 
 
 
@@ -36,6 +37,22 @@ const deleteDonor = async (req, res) => {
     res.json(updatedUser);
   } catch (error) {
     res.status(500).json({ error: "Failed to update Donor" });
+  }
+};
+
+// soft delete for donation
+const deleteDonation = async (req, res) => {
+  try {
+    const donationId = req.params.id;
+
+    const donation = await Order.findById(donationId);
+    donation.is_delete = true;
+
+    const updatedDonation = await donation.save();
+
+    res.json(updatedDonation);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete donation" });
   }
 };
 
@@ -144,7 +161,7 @@ const rejectDonation = async (req, res) => {
 
 // get org request on donation
 const allOrgRequestDonation = (req, res) => {
-  CharityMovements.find({status:false})
+  CharityMovements.find({ status: false })
     .then((data) => {
       res.json(data);
     })
@@ -161,10 +178,10 @@ const acceptOrgRequestDonation = async (req, res) => {
     const user = await CharityMovements.findById(userId);
     user.status = true;
     const updatedUser = await user.save();
-    
+
     // 2)
-    
-    
+
+
     const orderID = user.order_id;
     const chairtyID = user.charity_id;
 
@@ -172,26 +189,22 @@ const acceptOrgRequestDonation = async (req, res) => {
 
     const chairtyName = chairty.username
 
-    const query = {order_id: orderID}
-    const move = await DonorMovements.findOneAndUpdate(query ,  { destination : chairtyName ,status: true })
+    const query = { order_id: orderID }
+    const move = await DonorMovements.findOneAndUpdate(query, { destination: chairtyName, status: true })
 
-// 3)
- const orderStatus = await Order.findById(orderID);
- orderStatus.available = false;
+    // 3)
+    const orderStatus = await Order.findById(orderID);
+    orderStatus.available = false;
 
- const updateStatus = await orderStatus.save();
+    const updateStatus = await orderStatus.save();
 
 
-console.log(user , move , updateStatus)
+    console.log(user, move, updateStatus)
     res.json(updatedUser);
   } catch (error) {
     res.status(500).json({ error: "Failed to update Donor" });
   }
 };
-
-// reject org request on donation
-
-
 
 // get all messages
 const allMessages = (req, res) => {
@@ -216,7 +229,58 @@ const deleteMessage = async (req, res) => {
   }
 };
 
+// Questions
+const allQuestions = (req, res) => {
+  Questions.find()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((error) => {
+      errorHandler(error, req, res);
+    });
+};
 
+const newQuestions = async (req, res) => {
+
+  const { question, answer } = req.body;
+
+  try {
+    const newQuestions = new Questions({
+      question: question,
+      answer: answer,
+    });
+
+    const add = await newQuestions.save();
+
+    res.json(add);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateQuestions = async (req, res) => {
+  const userId = req.params.id;
+  const updatedQuestionsData = req.body;
+
+  const updatedQuestions = await Questions.findByIdAndUpdate(userId, updatedQuestionsData, {
+    new: true,
+  });
+
+  res.json(updatedQuestions);
+};
+
+const deleteQuestions = async (req, res) => {
+
+  try {
+    const QuestionId = req.params.id;
+    const deletedDocument = await Questions.findByIdAndDelete(QuestionId);
+
+    res.json({"Document deleted successfully:": deletedDocument});
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete Questions request" });
+  }
+};
 
 module.exports = {
   allDonors,
@@ -233,4 +297,9 @@ module.exports = {
   acceptOrgRequestDonation,
   allMessages,
   deleteMessage,
+  deleteDonation,
+  allQuestions,
+  newQuestions,
+  updateQuestions,
+  deleteQuestions,
 };

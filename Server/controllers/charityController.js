@@ -53,31 +53,30 @@ const newCharity = async (req, res, next) => {
 const updateCharity = async (req, res) => {
     const userId = req.params.id;
     const updatedUserData = req.body;
-  
+
     const user = await Charity.findById(userId);
-  
+
     if (!user || user.is_delete) {
-      return res.status(401).send('User not found');
+        return res.status(401).send('User not found');
     }
-  
+
     const passwordMatches = await bcrypt.compare(
-      updatedUserData.password,
-      user.password
+        updatedUserData.password,
+        user.password
     );
-  
+
     if (!passwordMatches) {
-      return res.status(401).send('Incorrect password');
+        return res.status(401).send('Incorrect password');
     }
-  
+
     updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-  
+
     const updatedUser = await Charity.findByIdAndUpdate(userId, updatedUserData, {
-      new: true,
+        new: true,
     });
-  
+
     res.json(updatedUser);
-  };
-  
+};
 
 const deleteCharity = async (req, res) => {
     try {
@@ -99,7 +98,6 @@ const deleteCharity = async (req, res) => {
         res.status(500).json({ error: 'Failed to update Charity' });
     }
 };
-
 
 module.exports = {
     allCharities,

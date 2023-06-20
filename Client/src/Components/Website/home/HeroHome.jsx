@@ -14,9 +14,6 @@ const HeroHome = () => {
             </div>
 
             <div className="flex flex-col justify-center items-end">
-              <div className="w-2/5  ">
-                <img src={logo} alt="logo" className="justify-end" />
-              </div>
               <h1 className="font-black text-5xl text-white text-right mb-7">
                 #وشاحك_واصل
               </h1>

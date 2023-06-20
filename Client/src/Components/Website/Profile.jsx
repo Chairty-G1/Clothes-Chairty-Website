@@ -24,6 +24,7 @@ function Profile() {
 
   async function verifyToken() {
     const token = localStorage.getItem("token") || false;
+
     if (token) {
       try {
         const res = await axios.get(`http://localhost:8000/Verify_token`, {
@@ -59,13 +60,10 @@ function Profile() {
   const startGetUserData = async () => {
     const userVerifyToken = await verifyToken();
     const user = await getUser(userVerifyToken.data.userId, userVerifyToken.data.role);
-    const Log = await getUserLog(userVerifyToken.data.email, userVerifyToken.data.role)
+    const Log = await getUserLog(userVerifyToken.data.email, userVerifyToken.data.role);
     setUserLog(Log);
     setUser(user);
-    console.log(Log)
   }
-
-
 
   useEffect(() => {
     startGetUserData();
@@ -82,8 +80,6 @@ function Profile() {
 
   async function handelsubmit(event) {
     event.preventDefault();
-
-    console.log({ ...user[0], username: username, phone: phone, password: password })
 
     try {
       const res = await axios.put(`http://localhost:8000/${user[0].role === "donor" ? "donor" : "charity"}/${user[0]._id}`, { ...user[0], username: username, phone: phone, password: password });

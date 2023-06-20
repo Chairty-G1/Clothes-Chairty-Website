@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
-const authController = require("../controllers/authController");
-const verifyJWT = require("../middleware/verifyJWT");
-
-
-
 
 // all donors 
 router.get("/dashboard/donors",adminController.allDonors );
@@ -49,7 +44,14 @@ router.get("/dashboard/messages", adminController.allMessages);
 // delete messages
 router.delete("/dashboard/deleteMessages/:id", adminController.deleteMessage);
 
+// delete donation
+router.put("/dashboard/deleteDonation/:id", adminController.deleteDonation);
 
+// Question
+router.post("/dashboard/questions", adminController.newQuestions);
+router.get("/dashboard/questions", adminController.allQuestions);
+router.put("/dashboard/questions/:id", adminController.updateQuestions);
+router.delete("/dashboard/questions/:id", adminController.deleteQuestions);
 
 
 

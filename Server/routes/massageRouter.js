@@ -23,7 +23,6 @@ router.get("/message", async (req, res) => {
 
     messageData.find()
         .then((data) => {
-            console.log(data);
             res.json(data);
         })
         .catch((error) => {
