@@ -55,8 +55,6 @@ export default function OurServices() {
       </p>
 
       <p className="mr-[10%] mt-10 text-end pr-4 text-xl font-bold text-teal-600">
-        01
-        <br />
         خدمة الاستلام المباشر للتبرعات:
         <span className="text-lg text-gray-400">
           تتم خدمة استلام التبرعات العينية مباشرة من المتبرعين عبر المنصة
@@ -69,7 +67,7 @@ export default function OurServices() {
         <h2 className="my-10 text-center text-teal-600 text-3xl font-bold font-main">
           إجراءات التبرع
         </h2>
-        <div className="py-3 sm:max-w-xl sm:mx-auto w-full px-2 sm:px-0">
+        <div className="py-3 sm:mx-auto px-2 sm:px-0">
           <div className="relative antialiased text-sm font-semibold">
             {/* Vertical bar running through middle */}
             <div className="hidden sm:block w-1 bg-teal-600 absolute h-full left-1/2 transform -translate-x-1/2" />
@@ -79,8 +77,8 @@ export default function OurServices() {
               <div className="flex flex-col sm:flex-row items-center">
                 <div className="flex justify-end w-full mx-auto items-center">
                   <div className="w-full sm:w-1/2 sm:pl-8">
-                    <div className="p-4 bg-white rounded shadow">
-                      01
+                    <div className="p-4 bg-white rounded shadow" style={{direction: "rtl" }} >
+                      1
                       <br />
                       نقوم بإمداد المتبرعين بكافة المعلومات والوسائل المطلوبة
                       لتسهيل إجراء مهمة التبرع، بالإضافة إلى نشر التوعية البيئية
@@ -112,8 +110,8 @@ export default function OurServices() {
               <div className="flex flex-col sm:flex-row items-center">
                 <div className="flex justify-start w-full mx-auto items-center">
                   <div className="w-full sm:w-1/2 sm:pr-8">
-                    <div className="p-4 bg-white rounded shadow">
-                      02
+                    <div className="p-4 bg-white rounded shadow" style={{direction: "rtl" }}>
+                      2
                       <br />
                       سيتم التواصل مع المتبرع خلال مدة زمنية قصيرة بحد أقصى ٢٤
                       ساعة
@@ -131,8 +129,8 @@ export default function OurServices() {
               <div className="flex flex-col sm:flex-row items-center">
                 <div className="flex justify-end w-full mx-auto items-center">
                   <div className="w-full sm:w-1/2 sm:pl-8">
-                    <div className="p-4 bg-white rounded shadow">
-                      03
+                    <div className="p-4 bg-white rounded shadow" style={{direction: "rtl" }}  >
+                      3
                       <br />
                       تأتي راحة المتبرع في مقدمة أولويتنا، لذا للمتبرع حرية
                       اختيار الموعد والمكان المناسب له. حتى يتمكن مندوب خيرُك من
@@ -152,8 +150,8 @@ export default function OurServices() {
               <div className="flex flex-col sm:flex-row items-center">
                 <div className="flex justify-start w-full mx-auto items-center">
                   <div className="w-full sm:w-1/2 sm:pr-8">
-                    <div className="p-4 bg-white rounded shadow">
-                      04
+                    <div className="p-4 bg-white rounded shadow" style={{direction: "rtl" }}>
+                      4
                       <br />
                       تقوم خيرُك بإرسال رسائل دورية لمتابعة أثر التبرع، وكذلك
                       ترسل استقصاء رأي حول مستوى أداء الخدمة ومدى تفاعل مندوبينا
@@ -171,7 +169,7 @@ export default function OurServices() {
       </div>
 
       <p className="mr-[10%] px-40 mt-10 mb-20 text-end pr-4 text-xl font-bold text-teal-600">
-        02
+        ...قريبا
         <br />
         فعاليات وأنشطة التوعية البيئية
         <br />
@@ -187,7 +185,7 @@ export default function OurServices() {
         <br />
         <br />
         <span className="text-lg text-gray-400">
-          لذلك تحرص خيرُك على تنظيم العديد من الفعاليات والأنشطة التوعوية في
+          لذلك تحرص وشاح الأمل على تنظيم العديد من الفعاليات والأنشطة التوعوية في
           مراكز التجارية والنوادي والمدارس، لنشر وزيادة الوعي بأهمية الموضة
           المستدامة من حيث أهمية اختيار الأقمشة الصديقة للبيئة. بالإضافة إلى
           تعزيز أهمية الأعمال الخيرية، كمثال عظيم لمحاولة رفع مستوى الإنسانية

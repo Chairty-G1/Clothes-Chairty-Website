@@ -31,7 +31,7 @@ const FQAHome = () => {
               {data?.map((question) => {
                 return (
                   <details className="mb-5">
-                    <summary class="py-2 bg-[#006E6A] text-white font-bold  outline-none cursor-pointer focus:underline ps-5">
+                    <summary class="py-2 bg-[#006E6A] text-white font-bold  outline-none cursor-pointer focus:underline ps-5 mb-4">
                       {question.question}
                     </summary>
                     <div class="px-4 pb-4">

@@ -204,7 +204,7 @@ function Profile() {
                     <div>
                       <label className="font-medium">كلمة المرور</label>
                       <input
-                        type="text"
+                        type="password"
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-teal-600 shadow-sm rounded-lg"
                       />
@@ -250,7 +250,7 @@ function Profile() {
                           <>
                             <tr>
                               <td className="px-6 py-4 whitespace-nowrap">
-                                <span className={`bg-${movement.status ? 'green' : 'red'}-100 text-${movement.status ? 'green' : 'red'}-800 text-lg font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-${movement.status ? 'green' : 'red'}-400 border border-${movement.status ? 'green' : 'red'}-400`}>{user[0].role === 'donor' ? (movement.status ? 'مستلم' : "غير مستلم") : (movement.status ? 'مقبول' : "غير مقبول")}</span>
+                                <div className={`bg-${movement.status ? 'green' : 'red'}-100 text-${movement.status ? 'green' : 'red'}-800 text-lg font-medium mr-2 px-3.5 py-1 text-center rounded dark:bg-gray-700 dark:text-${movement.status ? 'green' : 'red'}-400 border border-${movement.status ? 'green' : 'red'}-400`}>{user[0].role === 'donor' ? (movement.status ? 'مستلم' : "غير مستلم") : (movement.status ? 'مقبول' : "قيد الانتظار")}</div>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap">{movement.date}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{movement.destination === '' ? 'لا يوجد' : movement.destination} </td>

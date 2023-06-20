@@ -37,7 +37,7 @@ export default function ContactUs() {
       const res = await axios.post('http://localhost:8000/message', { name, email, message });
       console.log(res);
       event.target.reset();
-      setMassage({ msg: 'تم إرسال رسالتك بنجاح ، سيقوم فريقنا بالاتصال بك في أقرب وقت ممكن', theme: 'green' });
+      setMassage({ msg: 'تم إرسال رسالتك بنجاح ، سيقوم فريقنا بالرد عليك في أقرب وقت ممكن', theme: 'green' });
     } catch (error) {
       setMassage({ msg: 'هناك شئ خاطئ، يرجى المحاولة فى وقت لاحق', theme: 'red' });
       console.log(error);

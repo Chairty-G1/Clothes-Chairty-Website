@@ -47,12 +47,7 @@ export const Aside = (props) => {
   const count = hotels.length;
 
   return (
-    // <aside
 
-    //   className="fixed top-0  z-50 w-64  h-screen pt-[62px] pb-1 transition-transform translate-x-full  md:translate-x-0"
-    //   aria-label="Sidenav"
-    //   id="drawer-navigation"
-    // >
     <aside className="fixed top-0 z-50 w-64  h-screen pt-[62px] pb-1 transition-transform translate-x-full  md:translate-x-0">
       <div className="overflow-y-auto py-5 px-3 h-full bg-teal-600 ">
         <ul className="space-y-2">
