@@ -12,7 +12,7 @@ function Profile() {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [edit, setEdit] = useState("hidden");
-  const [massage, setMassage] = useState();
+  const [massageWarning, setWarningMassage] = useState();
   const [userLog, setUserLog] = useState();
 
   const location = useLocation();
@@ -80,17 +80,34 @@ function Profile() {
 
   async function handelsubmit(event) {
     event.preventDefault();
+    const patternPhone = /^07\d{8}$/;
+    const patternEmail = /^[A-z0-9\.]+@[A-z0-9]+\.[A-z]{3,5}$/;
+    const patternPassword = /^(?=.*[A-Z]?)(?=.*?[0-9])(?=.*?[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,.?]).{8,}$/;
+
+    if (!patternEmail.test(username)) {
+      setWarningMassage("ايميل غير صالح");
+      return;
+    }
+    else if (!patternPhone.test(phone)) {
+      setWarningMassage("رقم هاتف غير صالح");
+      return;
+    }
+    else if (!patternPassword.test(password)){
+      setWarningMassage("كلمة مرور غير صالحة");
+      return;
+    }
+
 
     try {
-      const res = await axios.put(`http://localhost:8000/${user[0].role === "donor" ? "donor" : "charity"}/${user[0]._id}`, { ...user[0], username: username, phone: phone, password: password });
-      setUser(res.data);
-      event.target.reset();
-      setEdit("hidden");
-      startGetUserData();
-    } catch (error) {
-      console.log(error);
-      setMassage('كلمة المرور غير صالحة')
-    }
+        const res = await axios.put(`http://localhost:8000/${user[0].role === "donor" ? "donor" : "charity"}/${user[0]._id}`, { ...user[0], username: username, phone: phone, password: password });
+        setUser(res.data);
+        event.target.reset();
+        setEdit("hidden");
+        startGetUserData();
+      } catch (error) {
+        console.log(error);
+        setWarningMassage('كلمة المرور غير صحيحة')
+      }
   }
 
   if (!userLog || !user[0]) {
@@ -202,7 +219,7 @@ function Profile() {
                     <button type="button" onClick={() => setEdit("hidden")} className="w-full flex justify-center px-4 py-2 text-white font-medium rounded-md bg-teal-600 transition hover:bg-teal-700">
                       إلغاء
                     </button>
-                    <p className={`mt-2 text-sm text-red-600 dark:text-red-500`}><span className="font-medium">{massage}</span></p>
+                    <p className={`mt-2 text-sm text-red-600 dark:text-red-500`}><span className="font-medium">{massageWarning}</span></p>
                   </form>
                 </div>
               </main>

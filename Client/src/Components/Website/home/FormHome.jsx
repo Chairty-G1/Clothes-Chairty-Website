@@ -173,8 +173,7 @@ const FormHome = () => {
   const isValidNumber = (number) => {
     return /^\d+$/.test(number) && number >= 0 && number <= 100;
   };
-
-  if (!userData && token) {
+  if (!userData && token && userData?.role !== 'charity') {
     return (
       <Loader />
     )

@@ -150,7 +150,7 @@ export default function AboutUs() {
                 <div className="mb-12 md:mb-0" style={{height: '150px'}}>
                   <img
                     className="mx-auto mb-6 rounded-lg shadow-lg dark:shadow-black/20 w-[150px]"
-                    src="https://cdn.discordapp.com/attachments/1119217702968508417/1120059030778425496/EB3E9053-B8B1-4203-9602-FC791C2FF8AC.jpg"
+                    src="https://cdn.discordapp.com/attachments/1119217702968508417/1120600157910741092/hindh.png"
                     alt="avatar" style={{height: '100%'}}
                   />
                   <h5 className="mb-4 text-lg font-bold">هند هديب</h5>
